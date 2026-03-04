@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router';
 
-export default function DashboardPage() {
+export default function SettingsPage() {
 const apiUrl = import.meta.env.VITE_API_URL;
   const { logout } = useAuth();
   const [data, setData] = useState(null);
@@ -10,7 +10,7 @@ const apiUrl = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(`${apiUrl}/api/userData/dashboard-data`, {
+      const response = await fetch(`${apiUrl}/api/userData/settings`, {
         credentials: 'include',
       });
 
@@ -31,8 +31,8 @@ const apiUrl = import.meta.env.VITE_API_URL;
 
   return (
     <div style={{ padding: '20px' }}>
-      <h1>Secure Dashboard</h1>
-      <p>bio: {data.bio}</p>
+      <h1>Settings</h1>
+      <p>{data.message}</p>
     </div>
   );
 }

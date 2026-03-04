@@ -16,7 +16,7 @@ export function AuthProvider({ children }) {
 
   const checkAuthStatus = async () => {
     try {
-      const response = await fetch(`${apiUrl}/api/auth/high`, {
+      const response = await fetch(`${apiUrl}/api/auth/me`, {
         credentials: 'include', // Include cookies in the request
       });
 
@@ -37,7 +37,30 @@ export function AuthProvider({ children }) {
     }
   };
 
-  const login = async (email, password) => {
+  const createAccount = async (username, password, phoneNumber) => {
+    try {
+      const response = await fetch(`${apiUrl}/api/userData/create-account`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify({ username, password, phoneNumber }), // Add phoneNumber if needed
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to create account');
+      }
+
+      const data = await response.json();
+      return { success: true, data };
+    } catch (error) {
+      console.error('Create account error:', error);
+      return { success: false, error: error.message || 'Failed to create account' };
+    }
+  };
+
+  const login = async (username, password) => {
     try {
       const response = await fetch(`${apiUrl}/api/auth/login`, {
         method: 'POST',
@@ -45,7 +68,7 @@ export function AuthProvider({ children }) {
           'Content-Type': 'application/json',
         },
         credentials: 'include', // Include cookies in the request
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ username, password }),
       });
 
       if (!response.ok) {
@@ -81,6 +104,7 @@ export function AuthProvider({ children }) {
     user,
     loading,
     login,
+    createAccount,
     logout,
     checkAuthStatus,
   };

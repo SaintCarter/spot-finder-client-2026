@@ -44,25 +44,19 @@ export default function App() {
               fontWeight: 700 
             }}
           >
-            MY APP
+            SPOTFINDER
           </Typography>
 
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-            <Button color="inherit" component={RouterLink} to="/">
-              Home
-            </Button>
 
-            {isAuthenticated ? (
+            {isAuthenticated && (
               <>
                 <Button color="inherit" component={RouterLink} to="/dashboard">
                   Dashboard
                 </Button>
-                
-                {/* Optional: Show user email/name in the nav */}
-                <Typography variant="body2" sx={{ opacity: 0.8, ml: 1 }}>
-                  {user?.email}
-                </Typography>
-
+                <Button color="inherit" component={RouterLink} to="/settings">
+                  Settings
+                </Button>
                 <Button 
                   variant="outlined" 
                   color="inherit" 
@@ -72,10 +66,6 @@ export default function App() {
                   Logout
                 </Button>
               </>
-            ) : (
-              <Button color="inherit" component={RouterLink} to="/">
-                Login
-              </Button>
             )}
           </Box>
         </Toolbar>
@@ -89,7 +79,7 @@ export default function App() {
       {/* Optional Footer */}
       <Box component="footer" sx={{ py: 3, textAlign: 'center', bgcolor: 'background.paper', mt: 'auto' }}>
         <Typography variant="body2" color="text.secondary">
-          © {new Date().getFullYear()} My App Inc.
+          © {new Date().getFullYear()} Spot Finder Inc.
         </Typography>
       </Box>
     </Box>
