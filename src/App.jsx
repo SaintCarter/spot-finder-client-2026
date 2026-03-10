@@ -31,7 +31,7 @@ export default function App() {
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
       {/* Modern Navigation Bar */}
-      <AppBar position="static" elevation={2}>
+      <AppBar position="static" elevation={2} sx={{borderRadius:1.5}}>
         <Toolbar>
           <Typography 
             component={RouterLink} 

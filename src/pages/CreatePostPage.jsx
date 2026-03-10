@@ -6,7 +6,7 @@ import {
 } from '@mui/material';
 
 
-export default function CreatePage() {
+export default function CreatePostPage() {
     const apiUrl = import.meta.env.VITE_API_URL;
     const { logout, user } = useAuth();
     const [data, setData] = useState(null);
