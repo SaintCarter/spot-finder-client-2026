@@ -37,15 +37,14 @@ export function AuthProvider({ children }) {
     }
   };
 
-  const createAccount = async (username, password, phoneNumber) => {
+  const createAccount = async (formData) => {
     try {
       const response = await fetch(`${apiUrl}/api/userData/create-account`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
         },
         credentials: 'include',
-        body: JSON.stringify({ username, password, phoneNumber }), // Add phoneNumber if needed
+        body: formData, 
       });
 
       if (!response.ok) {
@@ -56,7 +55,8 @@ export function AuthProvider({ children }) {
       return { success: true, data };
     } catch (error) {
       console.error('Create account error:', error);
-      return { success: false, error: error.message || 'Failed to create account' };
+      return { success: false, error: error.response?.data?.error || "An unexpected error occurred",
+      imageError: error.response?.data?.error };
     }
   };
 

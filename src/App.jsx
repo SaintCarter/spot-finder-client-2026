@@ -34,34 +34,34 @@ export default function App() {
       <AppBar position="static" elevation={2}>
         <Toolbar>
           <Typography 
-            variant="h6" 
             component={RouterLink} 
             to="/" 
             sx={{ 
               flexGrow: 1, 
               textDecoration: 'none', 
               color: 'inherit',
-              fontWeight: 700 
+              fontWeight: 700,
+              "@media (max-width:600px)": {display:"none"}
             }}
           >
             SPOTFINDER
           </Typography>
 
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent:"center", gap: 2 ,}}>
 
             {isAuthenticated && (
               <>
-                <Button color="inherit" component={RouterLink} to="/dashboard">
+                <Button color="inherit" component={RouterLink} to="/dashboard" sx={{minWidth:"auto", fontSize:"0.75rem", px:1}}>
                   Dashboard
                 </Button>
-                <Button color="inherit" component={RouterLink} to="/settings">
+                <Button color="inherit" component={RouterLink} to="/settings" sx={{minWidth:"auto", fontSize:"0.75rem", px:1}}>
                   Settings
                 </Button>
                 <Button 
                   variant="outlined" 
                   color="inherit" 
                   onClick={handleLogout}
-                  sx={{ ml: 1, borderColor: 'rgba(255,255,255,0.5)' }}
+                  sx={{ borderColor: 'rgba(255,255,255,0.5)', minWidth:"auto", fontSize:"0.75rem", px:1}}
                 >
                   Logout
                 </Button>
@@ -72,7 +72,7 @@ export default function App() {
       </AppBar>
 
       {/* Main Content Area */}
-      <Container component="main" sx={{ flexGrow: 1, py: 4 }}>
+      <Container component="main" sx={{ flexGrow: 1, py: 2 }}>
         <Outlet />
       </Container>
 

@@ -7,6 +7,9 @@ import ProtectedRoute from './components/ProtectedRoute'
 import HomePage from './pages/HomePage'
 import DashboardPage from './pages/DashboardPage'
 import SettingsPage from './pages/SettingsPage'
+import CreatePage from './pages/CreatePage'
+import CreateSpotPage from './pages/CreateSpotPage.jsx'
+import CreatePostPage from './pages/CreatePostPage.jsx'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
@@ -20,6 +23,30 @@ ReactDOM.createRoot(document.getElementById('root')).render(
               element={
                 <ProtectedRoute>
                   <DashboardPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/dashboard/create"
+              element={
+                <ProtectedRoute>
+                  <CreatePage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/dashboard/create/post"
+              element={
+                <ProtectedRoute>
+                  <CreatePostPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/dashboard/create/spot"
+              element={
+                <ProtectedRoute>
+                  <CreateSpotPage />
                 </ProtectedRoute>
               }
             />

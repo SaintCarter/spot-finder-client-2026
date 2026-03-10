@@ -13,8 +13,15 @@ export default function HomePage() {
   const [error, setError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [hasAccount, setHasAccount] = useState(true);
-  const [phoneNumber, setPhoneNumber] = useState('');
+  const [email, setEmail] = useState('');
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [imageError, setImageError] = useState('');
 
+  const handleFileChange = (e) => {
+    if (e.target.files && e.target.files[0]) {
+      setSelectedFile(e.target.files[0]);
+    }
+  };
   const { login, createAccount } = useAuth();
   const navigate = useNavigate();
 
@@ -40,8 +47,8 @@ export default function HomePage() {
         setIsSubmitting(false);
         return;
       }
-      if (!phoneNumber) {
-        setError('Phone number is required');
+      if (!email) {
+        setError('Email is required');
         setIsSubmitting(false);
         return;
       }
@@ -55,17 +62,30 @@ export default function HomePage() {
         setIsSubmitting(false);
         return;
       }
-      const result = await createAccount(username, password, phoneNumber);
+      const formData = new FormData();
+      formData.append('username', username);
+      formData.append('password', password);
+      formData.append('email', email);
+      if (selectedFile) {
+        formData.append('boardImage', selectedFile);
+      }else {
+        setError('Profile picture is required');
+        setIsSubmitting(false);
+        return;
+      }
+      
+      const result = await createAccount(formData);
       if (result.success) {
         setError('');
         setUsername('');
-        setPhoneNumber('');
+        setEmail('');
         setPassword('');
         setConfirmPassword('');
         setHasAccount(true);
         setIsSubmitting(false);
         return;
       } else {
+        setImageError(result.imageError || 'Failed to process profile picture');
         setError(result.error || 'Failed to create account');
         setIsSubmitting(false);
         return;
@@ -137,11 +157,32 @@ export default function HomePage() {
                 <TextField
                   margin="normal"
                   fullWidth
-                  label="Phone Number"
-                  value={phoneNumber}
-                  onChange={(e) => setPhoneNumber(e.target.value)}
+                  label="Email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   sx={{ mb: 2 }}
                 />
+                <Box sx={{ mb: 2, textAlign: 'center' }}>
+                  <Button variant="outlined" component="label" fullWidth sx={{ mb: 1 }}>
+                    Upload Board Image (must be horizontal with solid background)
+                    <input 
+                      type="file" 
+                      hidden 
+                      accept="image/*" 
+                      onChange={handleFileChange} 
+                    />
+                  </Button>
+                  {selectedFile && (
+                    <Typography variant="caption" display="block">
+                      Selected: {selectedFile.name}
+                    </Typography>
+                  )}
+                  {imageError && (
+                    <Typography variant="caption" display="block" color="error">
+                      {imageError}
+                    </Typography>
+                  )}
+                </Box>
               </>
             )}
             <Button
