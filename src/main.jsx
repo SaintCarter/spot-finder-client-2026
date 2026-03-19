@@ -10,6 +10,7 @@ import SettingsPage from './pages/SettingsPage'
 import CreatePage from './pages/CreatePage'
 import CreateSpotPage from './pages/CreateSpotPage.jsx'
 import CreatePostPage from './pages/CreatePostPage.jsx'
+import MapPage from './pages/MapPage.jsx'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
@@ -31,6 +32,14 @@ ReactDOM.createRoot(document.getElementById('root')).render(
               element={
                 <ProtectedRoute>
                   <CreatePage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/dashboard/map"
+              element={
+                <ProtectedRoute>
+                  <MapPage />
                 </ProtectedRoute>
               }
             />

@@ -1,38 +1,144 @@
 import { useEffect, useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router';
+import { 
+  Box, Button, TextField, Typography, Container, Paper, Alert, CircularProgress, Avatar 
+} from '@mui/material';
 
 export default function SettingsPage() {
-const apiUrl = import.meta.env.VITE_API_URL;
-  const { logout } = useAuth();
-  const [data, setData] = useState(null);
+  const apiUrl = import.meta.env.VITE_API_URL;
+  const [selectedFile, setSelectedFile] = useState(null);
   const navigate = useNavigate();
+  const [error, setError] = useState('');
+  const [boardUrl, setBoardUrl] = useState('');
+  const [loading, setLoading] =  useState(false);
+
 
   useEffect(() => {
-    const fetchData = async () => {
-      const response = await fetch(`${apiUrl}/api/userData/settings`, {
+    if (selectedFile) {
+      handleSave();
+    }
+  }, [selectedFile]);
+
+  const handleCancel = () => {
+    setSelectedFile(null);
+    setBoardUrl('');
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+  };
+
+  const handleConfirm = async () => {
+    try {
+      const response = await fetch(`${apiUrl}/api/userData/add-board`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
         credentials: 'include',
+        body: JSON.stringify({ boardUrl: boardUrl }),
       });
 
-      if (response.ok) {
-        const result = await response.json();
-        setData(result);
-      } else {
-        // If the server says NO, we clear the local state and redirect
-        logout(); 
-        navigate('/');
+      if (!response.ok) {
+        throw new Error('Failed to add board');
       }
-    };
+      setBoardUrl('');
+      setSelectedFile(null);
+      return;
+    } catch (error) {
+      console.error('Create account error:', error);
+      return { success: false, error: error.response?.data?.error || "An unexpected error occurred" };
+    }
+  };
 
-    fetchData();
-  }, [logout, navigate]);
+  const AddBoardCheck = async (formData) => {
+    try {
+      const response = await fetch(`${apiUrl}/api/userData/add-board-check`, {
+        method: 'POST',
+        headers: {
+        },
+        credentials: 'include',
+        body: formData, 
+      });
 
-  if (!data) return <p>Loading secure data...</p>;
+      if (!response.ok) {
+        throw new Error('Failed to remove bg for board');
+      }
+
+      const data = await response.json();
+      return { success: true, data };
+    } catch (error) {
+      console.error('Create account error:', error);
+      return { success: false, error: error.response?.data?.error || "An unexpected error occurred" };
+    }
+  }
+
+
+  const handleFileChange = async (e) => {
+    if (e.target.files && e.target.files[0]) {
+      setSelectedFile(e.target.files[0]);
+    }
+  };
+
+  const handleSave = async () => {
+    if (!selectedFile) {
+      setError(' picture is required');
+      return;
+    }
+
+    if (selectedFile) {
+      setLoading(true);
+      console.log("see");
+      const formData = new FormData();
+      formData.append('boardImage', selectedFile);
+
+      const result = await AddBoardCheck(formData);
+      if (result.success) {
+        setError('');
+        setBoardUrl(result.data.boardUrl);
+        setLoading(false);
+        return;
+      } else {
+        setError(result.error || 'Failed to update settings');
+        setLoading(false);
+        return;
+      }
+    }
+}
+
 
   return (
-    <div style={{ padding: '20px' }}>
-      <h1>Settings</h1>
-      <p>{data.message}</p>
-    </div>
+  <Box sx={{width:"100%", height:"auto", display:"flex", justifyContent:"center", alignItems:"center", flexDirection:"column",}}>
+    {boardUrl && (
+      <>
+        <Box sx={{display:"flex", justifyContent:"center", alignItems:"center", flexDirection:"column"}}>
+          <Typography>Would you like to save this into My Boards?</Typography>
+          <Box>
+            <Button onClick={() => {handleConfirm()}}>Yes</Button>
+            <Button onClick={() => {handleCancel()}}>No</Button>
+          </Box>
+        </Box>
+        <Box component={'img'} src={boardUrl} alt={'skateboard'} sx={{width:"auto", height:60, objectFit:"contain"}}></Box>
+      </>
+    )}
+    <Box sx={{ mb: 2, textAlign: 'center' }}>
+      <Button disabled={loading} variant="contained" component="label" fullWidth sx={{ mb: 1 }}>
+        Upload Board Image
+        <input 
+          type="file" 
+          hidden 
+          accept="image/*" 
+          onChange={handleFileChange} 
+        />
+      </Button>
+      {selectedFile && (
+        <>
+          <Typography variant="caption" display="block">
+            Selected: {selectedFile.name}
+          </Typography>
+        </>
+      )}
+    </Box>
+  </Box>
   );
 }

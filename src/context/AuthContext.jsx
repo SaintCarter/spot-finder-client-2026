@@ -15,6 +15,7 @@ export function AuthProvider({ children }) {
   }, []);
 
   const checkAuthStatus = async () => {
+    setLoading(true);
     try {
       const response = await fetch(`${apiUrl}/api/auth/me`, {
         credentials: 'include', // Include cookies in the request
@@ -28,8 +29,9 @@ export function AuthProvider({ children }) {
         setIsAuthenticated(false);
         setUser(null);
       }
+    
     } catch (error) {
-      console.error('Auth check failed:', error);
+      console.error('Internal Server Error:', error);
       setIsAuthenticated(false);
       setUser(null);
     } finally {
@@ -37,14 +39,14 @@ export function AuthProvider({ children }) {
     }
   };
 
-  const createAccount = async (formData) => {
+  const createAccount = async (username, password, email) => {
     try {
       const response = await fetch(`${apiUrl}/api/userData/create-account`, {
-        method: 'POST',
+        method: 'POST', 
         headers: {
+            'Content-Type': 'application/json',
         },
-        credentials: 'include',
-        body: formData, 
+        body: JSON.stringify({username, password, email }),
       });
 
       if (!response.ok) {
@@ -55,8 +57,7 @@ export function AuthProvider({ children }) {
       return { success: true, data };
     } catch (error) {
       console.error('Create account error:', error);
-      return { success: false, error: error.response?.data?.error || "An unexpected error occurred",
-      imageError: error.response?.data?.error };
+      return { success: false, error: error.response?.data?.error || "An unexpected error occurred" };
     }
   };
 

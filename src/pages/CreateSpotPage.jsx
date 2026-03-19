@@ -10,17 +10,14 @@ import { CreateSpot } from '../api/CreateSpot.js';
 export default function CreateSpotPage() {
     const apiUrl = import.meta.env.VITE_API_URL;
     const { logout, user, loading } = useAuth();
-    const [data, setData] = useState(null);
     const [error, setError] = useState('');
     const [name, setName] = useState('');
-    const [spotType, setSpotType] = useState(null);
     const [description, setDescription] = useState(''); 
     const [hasSecurity, setHasSecurity] = useState(true);
     const [selectedFile, setSelectedFile] = useState(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [latitude, setLatitude] = useState('');
     const [longitude, setLongitude] = useState('');
-    const [address, setAddress] = useState('');
     const [spotTypes, setSpotTypes] = useState(null);
     const [selectedType, setSelectedType] = useState('');
     
@@ -130,6 +127,7 @@ export default function CreateSpotPage() {
             setHasSecurity(true);
             setLatitude('');
             setLongitude('');
+            window.location.reload();
         }else{
             setError(result.error);
         }

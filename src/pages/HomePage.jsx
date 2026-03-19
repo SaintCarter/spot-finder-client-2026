@@ -62,19 +62,8 @@ export default function HomePage() {
         setIsSubmitting(false);
         return;
       }
-      const formData = new FormData();
-      formData.append('username', username);
-      formData.append('password', password);
-      formData.append('email', email);
-      if (selectedFile) {
-        formData.append('boardImage', selectedFile);
-      }else {
-        setError('Profile picture is required');
-        setIsSubmitting(false);
-        return;
-      }
       
-      const result = await createAccount(formData);
+      const result = await createAccount(username, password, email);
       if (result.success) {
         setError('');
         setUsername('');
@@ -85,7 +74,6 @@ export default function HomePage() {
         setIsSubmitting(false);
         return;
       } else {
-        setImageError(result.imageError || 'Failed to process profile picture');
         setError(result.error || 'Failed to create account');
         setIsSubmitting(false);
         return;
@@ -162,27 +150,6 @@ export default function HomePage() {
                   onChange={(e) => setEmail(e.target.value)}
                   sx={{ mb: 2 }}
                 />
-                <Box sx={{ mb: 2, textAlign: 'center' }}>
-                  <Button variant="outlined" component="label" fullWidth sx={{ mb: 1 }}>
-                    Upload Board Image (must be horizontal with solid background)
-                    <input 
-                      type="file" 
-                      hidden 
-                      accept="image/*" 
-                      onChange={handleFileChange} 
-                    />
-                  </Button>
-                  {selectedFile && (
-                    <Typography variant="caption" display="block">
-                      Selected: {selectedFile.name}
-                    </Typography>
-                  )}
-                  {imageError && (
-                    <Typography variant="caption" display="block" color="error">
-                      {imageError}
-                    </Typography>
-                  )}
-                </Box>
               </>
             )}
             <Button
