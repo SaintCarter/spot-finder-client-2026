@@ -15,32 +15,44 @@ export default function MapPage() {
     const [spotData, setSpotData] = useState(null);
     const [selectedSpotData, setSelectedSpotData] = useState(null);
     const [spotMedia, setSpotMedia] = useState([]);
-    const defaultMediaUrl = 'https://btxaypoxynjsrsxpbysz.supabase.co/storage/v1/object/public/boards/profile-1773835173008-gx0iqx.png';
+    const [DataTypes, setDataTypes] = useState([]);
+    const [typeNames, setTypeNames] = useState([]);
+    const defaultMediaUrl = 'https://btxaypoxynjsrsxpbysz.supabase.co/storage/v1/object/public/boards/profile-1774162792571-8yyub8.png';
 
-    useEffect( () => {
-        const fetchData = async () => {
-            console.log(selectedSpotId);
-            const selectedData = spotData?.spots?.find(
-                (spot) => spot.id === selectedSpotId
-            );
+    useEffect(() => {
+        if (!spotData || !selectedSpotId) return;
 
+        //spots table
+        const selectedData = spotData.spots.find(
+            (spot) => spot.id === selectedSpotId
+        );
+        setSelectedSpotData(selectedData || null);
+
+        //spot_has_types table
+        const matchingTypes = spotData.types
+            .filter(type => type.spotid === selectedSpotId)
+            .map(type => {
+                // 3️⃣ Map spottypeid → name
+                const match = spotData.typeNames.find(t => t.id === type.spottypeid);
+                return match ? match.name : null;
+            })
+            .filter(Boolean); // remove nulls if any
+
+        setDataTypes(matchingTypes); // store array of strings
+        console.log("Selected type names:", matchingTypes);
+
+        // spot_media table
+        const fetchMedia = async () => {
             if (selectedData) {
-                setSelectedSpotData(selectedData);
-            } else {
-                setSelectedSpotData('');
-            }
-            if(selectedData){
                 const selectedMedia = await getSpotMedia({ spotId: selectedSpotId });
-                if (selectedMedia) {
-                    setSpotMedia(selectedMedia.spotMedia);
-                    console.log(selectedMedia.spotMedia);
-                }
+                setSpotMedia(selectedMedia?.spotMedia || [{ url: defaultMediaUrl, type: 'image' }]);
             } else {
                 setSpotMedia([{ url: defaultMediaUrl, type: 'image' }]);
             }
         };
-        fetchData();
-    }, [selectedSpotId]);
+
+        fetchMedia();
+    }, [selectedSpotId, spotData]);
 
     return (
     <Box sx={{width:"100%", height:"auto", display:"flex", justifyContent:"center", alignItems:"center", flexDirection:"column", color:"white"}}>
@@ -75,6 +87,16 @@ export default function MapPage() {
             <Box sx={{minWidth:"60%",minHeight:"100%", display:"flex", justifyContent:"center", alignItems:"center", flexDirection:"column", gap:2}}>
                 <Typography variant="h3" sx={{overflowWrap:"break-word", width:"80%"}}>{selectedSpotData?.name || 'name'}</Typography>
                 <Typography sx={{border:"1px solid black", width:"80%", borderRadius:1, p:1}}>{selectedSpotData?.description || 'description'}</Typography>
+                <Box sx={{display: 'flex', gap: 1, flexWrap: 'wrap', width: "80%"}}>
+                    {DataTypes.map((typeName, index) => (
+                        <Typography 
+                            key={index} 
+                            sx={{ px: 1, py: 0.5, border: '1px solid white', borderRadius: 1, fontSize: '0.875rem' }}
+                        >
+                            {typeName}
+                        </Typography>
+                    ))}
+                </Box>
             </Box>
         </Box>
         <BigMap setSpotData={setSpotData} setSelectedSpotId={setSelectedSpotId}/>

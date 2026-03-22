@@ -22,8 +22,8 @@ export const getMapLocations = async () => {
         console.error('Map error:', error);
     }
 
-    
 
+    
     const locations = locationData.spots.map(loc => ({
         id: loc.id,
         name: loc.name,

@@ -19,7 +19,7 @@ export default function CreateSpotPage() {
     const [latitude, setLatitude] = useState('');
     const [longitude, setLongitude] = useState('');
     const [spotTypes, setSpotTypes] = useState(null);
-    const [selectedType, setSelectedType] = useState('');
+    const [selectedType, setSelectedType] = useState([]);
     
     
     
@@ -56,7 +56,8 @@ export default function CreateSpotPage() {
     };
 
     const handleTypeChange = (e) => {
-        setSelectedType(e.target.value)
+        setSelectedType(e.target.value);
+        console.log(selectedType);
     }
 
 
@@ -65,8 +66,8 @@ export default function CreateSpotPage() {
         setError('');
         setIsSubmitting(true);
         
-        if(!selectedType){
-            setError('no type selected. please do that.');
+        if(!selectedType.length){
+            setError('no types selected. please do that.');
             setIsSubmitting(false);
             return;
         }
@@ -104,7 +105,6 @@ export default function CreateSpotPage() {
             setIsSubmitting(false);
             return;
         }
-
         const formData = new FormData();
         formData.append('spotname', name);
         formData.append('description', description);
@@ -112,7 +112,10 @@ export default function CreateSpotPage() {
         formData.append('creatorId', creatorId);
         formData.append('latitude', latitude);
         formData.append('longitude', longitude);
-        formData.append('spottype', selectedType);
+        selectedType.forEach((type) => {
+            formData.append('spottype', type);
+        });
+
         selectedFiles.forEach((file) => {
             formData.append('spotMedia', file);
         });
@@ -181,7 +184,7 @@ export default function CreateSpotPage() {
                     </RadioGroup>
                  </FormControl>
                  <FormControl sx={{ m: 1, minWidth: 200, width: '50%' }}> 
-                <InputLabel id="spot-type-label">Spot Type</InputLabel>
+                <InputLabel id="spot-type-label">Spot Features</InputLabel>
                 {spotTypes && (
                     <Select
                     labelId="spot-type-label"
@@ -189,10 +192,11 @@ export default function CreateSpotPage() {
                     value={selectedType}
                     label="Spot Type"
                     onChange={handleTypeChange}
+                    multiple
                     >
-                    {spotTypes.spotTypes.map((spot) => (
-                        <MenuItem key={spot.id} value={spot.id}>
-                        {spot.name}
+                    {spotTypes.spotTypes.map((type) => (
+                        <MenuItem key={type.id} value={type.id}>
+                        {type.name}
                         </MenuItem>
                     ))}
                     </Select>

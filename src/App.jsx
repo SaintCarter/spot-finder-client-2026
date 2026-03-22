@@ -31,7 +31,7 @@ export default function App() {
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
       {/* Modern Navigation Bar */}
-      <AppBar position="static" elevation={2} sx={{borderRadius:1.5}}>
+      <AppBar position="static" elevation={2} sx={{borderRadius:1.5, backgroundColor:'#3d3d3d'}}>
         <Toolbar>
           <Typography 
             component={RouterLink} 
@@ -71,13 +71,12 @@ export default function App() {
         </Toolbar>
       </AppBar>
 
-      {/* Main Content Area */}
+      {/* Main Content */}
       <Container component="main" sx={{ flexGrow: 1, py: 2 }}>
         <Outlet />
       </Container>
 
-      {/* Optional Footer */}
-      <Box component="footer" sx={{ py: 3, textAlign: 'center', bgcolor: 'background.paper', mt: 'auto' }}>
+      <Box component="footer" sx={{ py: 3, textAlign: 'center', bgcolor: '#3d3d3d', mt: 'auto' }}>
         <Typography variant="body2" color="text.secondary">
           © {new Date().getFullYear()} Spot Finder Inc.
         </Typography>
