@@ -2,10 +2,15 @@ import { useRef, useEffect, useState } from "react";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { getMapLocations } from '../api/getMapLocations.js';
+import { SearchBox } from "@mapbox/search-js-react";
+
 
 export default function BigMap({setSelectedSpotId, setSpotData}) {
   const mapRef = useRef(null);
   const mapContainerRef = useRef(null);
+
+  const [searchValue, setSearchValue]= useState("");
+
 
   
   const INITIAL_CENTER = [-123.107135390715, 49.283815957855];
@@ -77,9 +82,20 @@ export default function BigMap({setSelectedSpotId, setSpotData}) {
   }, []);
 
   return (
-    <div
-      ref={mapContainerRef}
-      style={{ width: "100%", height: "32vh" }}
-    />
+    <div style={{ position: "relative", width: "100%", height: "32vh" }}>
+      <div style={{ position: "absolute", top: 10, right: 10, zIndex: 1, width: "300px" }}>
+        <SearchBox
+          accessToken={import.meta.env.VITE_MAP_BOX_API_KEY}
+          map={mapRef.current}
+          mapboxgl={mapboxgl}
+          value={searchValue}
+          onChange={(d) => setSearchValue(d)}
+        />
+      </div>
+      <div
+        ref={mapContainerRef}
+        style={{ width: "100%", height: "32vh" }}
+      />
+    </div>
   );
 }

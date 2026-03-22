@@ -14,10 +14,14 @@ export default function MapPage() {
     const [selectedSpotId, setSelectedSpotId] = useState('');
     const [spotData, setSpotData] = useState(null);
     const [selectedSpotData, setSelectedSpotData] = useState(null);
-    const [spotMedia, setSpotMedia] = useState([]);
+    //const [spotMedia, setSpotMedia] = useState([]);
     const [DataTypes, setDataTypes] = useState([]);
     const [typeNames, setTypeNames] = useState([]);
     const defaultMediaUrl = 'https://btxaypoxynjsrsxpbysz.supabase.co/storage/v1/object/public/boards/profile-1774162792571-8yyub8.png';
+    const [spotMedia, setSpotMedia] = useState([
+        { url: defaultMediaUrl, type: 'image' }
+    ]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (!spotData || !selectedSpotId) return;
@@ -55,7 +59,8 @@ export default function MapPage() {
     }, [selectedSpotId, spotData]);
 
     return (
-    <Box sx={{width:"100%", height:"auto", display:"flex", justifyContent:"center", alignItems:"center", flexDirection:"column", color:"white"}}>
+    <Box sx={{width:"100%", height:"auto", display:"flex", justifyContent:"center", alignItems:"center", flexDirection:"column", color:"white", backgroundColor:"#3d3d3d", p:2}}>
+        <Button onClick={() => navigate('/dashboard/create')} variant="contained" component="label" fullWidth sx={{ mb: 1 }}>Create</Button>
         <Box sx={{minWidth:"100%", minHeight:"40vh", display:"flex", justifyContent:"center", alignItems:"center", gap:2, }}>
             {/* media left side */}
             <Box sx={{minWidth:"40%", minHeight:"100%", display:"flex", justifyContent:"center", alignItems:"center", border:"1px solid black", borderRadius:1.6, backgroundColor:"#aaaaaa", flexDirection:"column"}}>
@@ -85,8 +90,8 @@ export default function MapPage() {
             </Box>
             {/* details right side */}
             <Box sx={{minWidth:"60%",minHeight:"100%", display:"flex", justifyContent:"center", alignItems:"center", flexDirection:"column", gap:2}}>
-                <Typography variant="h3" sx={{overflowWrap:"break-word", width:"80%"}}>{selectedSpotData?.name || 'name'}</Typography>
-                <Typography sx={{border:"1px solid black", width:"80%", borderRadius:1, p:1}}>{selectedSpotData?.description || 'description'}</Typography>
+                <Typography variant="h3" sx={{overflowWrap:"break-word", width:"80%"}}>{selectedSpotData?.name || 'Select a point on the map'}</Typography>
+                <Typography sx={{border:"1px solid black", width:"80%", borderRadius:1, p:1}}>{selectedSpotData?.description || 'to see that spots data'}</Typography>
                 <Box sx={{display: 'flex', gap: 1, flexWrap: 'wrap', width: "80%"}}>
                     {DataTypes.map((typeName, index) => (
                         <Typography 

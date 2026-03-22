@@ -13,6 +13,7 @@
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
     "@mapbox/mapbox-gl-geocoder": "^5.1.2",
+    "@mapbox/search-js-react": "^1.5.1",
     "@mui/icons-material": "^7.3.8",
     "@mui/material": "^7.3.8",
     "@mui/styled-engine": "^7.3.8",

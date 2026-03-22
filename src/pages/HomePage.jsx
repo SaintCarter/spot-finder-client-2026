@@ -95,7 +95,7 @@ export default function HomePage() {
       minHeight: '100vh', 
       display: 'flex', 
       alignItems: 'center', 
-      bgcolor: '#f5f5f5' // Light grey background makes the white card pop
+      bgcolor: '#3d3d3d' // Light grey background makes the white card pop
     }}>
       <Container maxWidth="xs">
         <Paper elevation={6} sx={{ p: 4, borderRadius: 3, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
