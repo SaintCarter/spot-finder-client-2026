@@ -14,7 +14,7 @@ export default function CreateSpotPage() {
     const [name, setName] = useState('');
     const [description, setDescription] = useState(''); 
     const [hasSecurity, setHasSecurity] = useState(true);
-    const [selectedFile, setSelectedFile] = useState(null);
+    const [selectedFiles, setSelectedFiles] = useState([]);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [latitude, setLatitude] = useState('');
     const [longitude, setLongitude] = useState('');
@@ -23,8 +23,6 @@ export default function CreateSpotPage() {
     
     
     
-    const navigate = useNavigate();
-
     useEffect(() => {
         if (!loading && !user) {
             window.location.reload();
@@ -47,9 +45,14 @@ export default function CreateSpotPage() {
 
 
     const handleFileChange = (e) => {
-        if (e.target.files && e.target.files[0]) {
-        setSelectedFile(e.target.files[0]);
+        const files = Array.from(e.target.files);
+        if (files.length > 8) {
+            setError("Max 8 files allowed");
+            return;
         }
+        setSelectedFiles(prev => [...prev, ...files]);
+        console.log(files);
+        console.log(selectedFiles);
     };
 
     const handleTypeChange = (e) => {
@@ -91,7 +94,7 @@ export default function CreateSpotPage() {
             setIsSubmitting(false);
             return;
         }
-        if (!selectedFile) {
+        if (!selectedFiles.length) {
             setError('Profile picture is required');
             setIsSubmitting(false);
             return;
@@ -107,10 +110,12 @@ export default function CreateSpotPage() {
         formData.append('description', description);
         formData.append('hasSecurity', hasSecurity);
         formData.append('creatorId', creatorId);
-        formData.append('spotMedia', selectedFile);
         formData.append('latitude', latitude);
         formData.append('longitude', longitude);
         formData.append('spottype', selectedType);
+        selectedFiles.forEach((file) => {
+            formData.append('spotMedia', file);
+        });
 
         for (let [key, value] of formData.entries()) {
             console.log(key, value);
@@ -138,9 +143,9 @@ export default function CreateSpotPage() {
 
 
     return (
-        <Box sx={{width:"100%", height:"auto", display:"flex", justifyContent:"center", alignItems:"center", flexDirection:"column",}}>
+        <Box sx={{width:"100%", height:"auto", display:"flex", justifyContent:"center", alignItems:"center", flexDirection:"column", color:"#ffffff"}}>
             {error && <Alert severity="error" sx={{ width: '100%', mb: 2 }}>{error}</Alert>}                
-            <Box component="form" onSubmit={handleSubmit} noValidate sx={{ width: '100%' }}>
+            <Box component="form" onSubmit={handleSubmit} noValidate sx={{ width: '100%'  }}>
                 <Box>
                     <Map setLatitude={setLatitude} setLongitude={setLongitude} />
                     <Typography sx={{fontSize:12}}><Box component={'span'} sx={{fontSize:16}}>Please find the exact spot location and click on it. </Box>Selected Location: {latitude}, {longitude}</Typography>
@@ -195,17 +200,22 @@ export default function CreateSpotPage() {
                 </FormControl>
                 <Box sx={{ mb: 2, textAlign: 'center' }}>
                     <Button variant="outlined" component="label" fullWidth sx={{ mb: 1 }}>
-                        Upload Media
+                        Upload Media (Must be less than 50mb)
                         <input 
                         type="file" 
                         hidden 
-                        accept="image/*" 
+                        accept="image/*, video/*"
+                        multiple 
                         onChange={handleFileChange} 
                         />
                     </Button>
-                    {selectedFile && (
+                    {selectedFiles.length > 0 && (
                         <Typography variant="caption" display="block">
-                        Selected: {selectedFile.name}
+                            {selectedFiles.length} files selected:
+                            <br />
+                            {selectedFiles.map((file, i) => (
+                            <span key={i}>{file.name}<br /></span>
+                            ))}
                         </Typography>
                     )}
                 </Box>

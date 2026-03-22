@@ -42,13 +42,13 @@ const apiUrl = import.meta.env.VITE_API_URL;
         </Box>
         <Box sx={{width:"100%",display:"flex", justifyContent:"space-around", alignItems:"center", mt:2, bgcolor:"#C44444", p:2, borderRadius:1, gap:2}}>
           <Box sx={{"&:hover": { filter: "brightness(1.2)", transform: "scale(1.02)"}, cursor:"pointer", color:"white", minHeight:"80vh", width:"33%", justifyContent:"center", alignItems:"center", display:"flex", backgroundImage:"url('/images/reels.webp')", backgroundRepeat:"none", backgroundSize:"cover", backgroundPosition:"center", }}>
-            <Typography sx={{width:"100%", textAlign:"center"}}>REELS</Typography>
+            <Typography sx={{width:"100%", textAlign:"center", fontWeight: 'bold', fontSize:28}}>REELS</Typography>
           </Box>
           <Box onClick={() => navigate('/dashboard/map')} sx={{"&:hover": { filter: "brightness(1.2)", transform: "scale(1.02)"}, cursor:"pointer", color:"white", minHeight:"80vh", width:"33%", justifyContent:"center", alignItems:"center", display:"flex", backgroundImage:"url('/images/map.webp')", backgroundRepeat:"none", backgroundSize:"cover", backgroundPosition:"center", }}>
-            <Typography sx={{width:"100%", textAlign:"center"}}>MAP</Typography>
+            <Typography sx={{width:"100%", textAlign:"center", fontWeight: 'bold', fontSize:28}}>MAP</Typography>
           </Box>
           <Box onClick={() => navigate('/dashboard/create')} sx={{"&:hover": { filter: "brightness(1.2)", transform: "scale(1.02)"}, cursor:"pointer", color:"white", minHeight:"80vh", width:"33%", justifyContent:"center", alignItems:"center", display:"flex", backgroundImage:"url('/images/create.webp')", backgroundRepeat:"none", backgroundSize:"cover", backgroundPosition:"center", }}>
-            <Typography sx={{width:"100%", textAlign:"center"}}>CREATE</Typography>
+            <Typography sx={{width:"100%", textAlign:"center", fontWeight: 'bold', fontSize:28}}>CREATE</Typography>
           </Box>
           
         </Box>
