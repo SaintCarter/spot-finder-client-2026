@@ -40,11 +40,12 @@ export default function App() {
               flexGrow: 1, 
               textDecoration: 'none', 
               color: 'inherit',
-              fontWeight: 700,
+              fontWeight: 600,
+              fontStyle:"Dela Gothic One",
               "@media (max-width:600px)": {display:"none"}
             }}
           >
-            SPOTFINDER
+            SKATE.MAP
           </Typography>
 
           <Box sx={{ display: 'flex', alignItems: 'center', justifyContent:"center", gap: 2 ,}}>

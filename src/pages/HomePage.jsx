@@ -107,6 +107,9 @@ export default function HomePage() {
           <Typography variant="h4" sx={{ fontWeight: 700, mb: 3 }}>
             {hasAccount ? 'Welcome Back' : 'Create Account'}
           </Typography>
+          {!hasAccount && (
+            <Typography>We accept fake email!</Typography>
+          )}
 
           {error && <Alert severity="error" sx={{ width: '100%', mb: 2 }}>{error}</Alert>}
 
