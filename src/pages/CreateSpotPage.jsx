@@ -147,7 +147,7 @@ export default function CreateSpotPage() {
 
 
     return (
-        <Box sx={{width:"100%", height:"auto", display:"flex", justifyContent:"center", alignItems:"center", flexDirection:"column", color:"#ffffff", backgroundColor:"#3d3d3d"}}>
+        <Box sx={{width:"100%", height:"auto", display:"flex", justifyContent:"center", alignItems:"center", flexDirection:"column", color:"#ffffff", }}>
             <Paper elevation={6} sx={{ p: 4, borderRadius: 3, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                 {error && <Alert severity="error" sx={{ width: '100%', mb: 2 }}>{error}</Alert>}                
                 <Box component="form" onSubmit={handleSubmit} noValidate sx={{ width: '100%'  }}>

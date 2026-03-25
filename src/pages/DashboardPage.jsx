@@ -34,7 +34,7 @@ const apiUrl = import.meta.env.VITE_API_URL;
 
   return (
     <Box sx={{ p: 0 }}>
-      <Box sx={{width:"100%", height:"auto", display:"flex", justifyContent:"center", alignItems:"center", flexDirection:"column",}}>
+      <Box sx={{width:"100%", color:"#212121", height:"auto", display:"flex", justifyContent:"center", alignItems:"center", flexDirection:"column",}}>
         <Box sx={{width:"100%",display:"flex", justifyContent:"space-between", alignItems:"center", bgcolor:"#aaaaaa", p:1, borderRadius:1}}>
           <Typography sx={{ fontWeight: 'bold' }}>cash: x </Typography>
           <Typography sx={{ fontWeight: 'bold' }}>Spin the Wheel</Typography>

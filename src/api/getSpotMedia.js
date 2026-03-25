@@ -12,11 +12,10 @@ export const getSpotMedia = async ({ spotId }) => {
         });
 
         if (!response.ok) {
-            throw new Error('Failed to create account');
+            throw new Error('Failed to get spot media');
         }
 
         const mediaData = await response.json();
-        console.log(mediaData);
         return(mediaData);
     } catch (error) {
         console.error('Map error:', error);
