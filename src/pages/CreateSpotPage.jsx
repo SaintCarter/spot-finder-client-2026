@@ -79,7 +79,7 @@ export default function CreateSpotPage() {
             return;
         }
 
-        const creatorId = user.user.userId; 
+        const creatorId = user.userId; 
 
         if(!name){
             setError('missing spot name');

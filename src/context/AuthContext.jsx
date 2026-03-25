@@ -23,7 +23,11 @@ export function AuthProvider({ children }) {
 
       if (response.ok) {
         const data = await response.json();
-        setUser(data);
+        const userProfile = {
+          userId: data.userId,
+          username: data.username
+        };
+        setUser(userProfile);
         setIsAuthenticated(true);
       } else {
         setIsAuthenticated(false);
@@ -77,7 +81,11 @@ export function AuthProvider({ children }) {
       }
 
       const data = await response.json();
-      setUser(data.user);
+      const userProfile = {
+        userId: data.userId,
+        username: data.username
+      };
+      setUser(userProfile);
       setIsAuthenticated(true);
       return { success: true, data };
     } catch (error) {

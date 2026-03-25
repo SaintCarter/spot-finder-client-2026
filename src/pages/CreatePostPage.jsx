@@ -14,9 +14,13 @@ export default function CreatePostPage() {
     const [caption, setCaption] = useState('');
     const [error, setError] = useState('');
     const [selectedFiles, setSelectedFiles] = useState([]);
-    const {  user } = useAuth();
-    
-    
+    const {  loading, user } = useAuth();
+
+    useEffect(() => {
+        if (!loading && !user) {
+            window.location.reload();
+        }
+    }, [loading, user]);
 
     const handleFileChange = (e) => {
         const files = Array.from(e.target.files);
@@ -33,7 +37,6 @@ export default function CreatePostPage() {
         setIsSubmitting(true);
         setError('');
 
-        const creatorId = user?.user?.userId; 
 
         if(caption.length > 200){
             setError(`caption too long. max 200 chars. currently: ${description.length} chars`);
@@ -50,11 +53,12 @@ export default function CreatePostPage() {
             setIsSubmitting(false);
             return;
         }
-        if (!creatorId) {
+        if (!user) {
             setError('log in');
             setIsSubmitting(false);
             return;
         }
+        const creatorId = user.userId; 
 
         const formData = new FormData();
         formData.append('spotId', spotId);
