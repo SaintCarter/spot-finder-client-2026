@@ -31,9 +31,11 @@ export default function CreatePostPage() {
     const handleSubmit = async (e) =>{
         e.preventDefault();
         setIsSubmitting(true);
-        const creatorId = user.user.userId; 
+        setError('');
 
-        if(caption.length > 500){
+        const creatorId = user?.user?.userId; 
+
+        if(caption.length > 200){
             setError(`caption too long. max 200 chars. currently: ${description.length} chars`);
             setIsSubmitting(false);
             return;
