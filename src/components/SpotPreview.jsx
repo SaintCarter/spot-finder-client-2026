@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router';
 import { 
-  Box, Button, TextField, Typography, Container, Paper, Alert, CircularProgress, Avatar 
+  Box, Button, Chip, TextField, Typography, Container, Paper, Alert, CircularProgress, Avatar 
 } from '@mui/material';
 import BigMap  from '../components/BigMap.jsx';
 import { getSpotMedia } from '../api/getSpotMedia.js';
@@ -92,12 +92,12 @@ export default function SpotPreview({setSpotId}) {
                 <Typography sx={{border:"1px solid black", width:"80%", borderRadius:1, p:1}}>{selectedSpotData?.description || 'to see that spots data'}</Typography>
                 <Box sx={{display: 'flex', gap: 1, flexWrap: 'wrap', width: "80%"}}>
                     {DataTypes.map((typeName, index) => (
-                        <Typography 
-                            key={index} 
-                            sx={{ px: 1, py: 0.5, border: '1px solid white', borderRadius: 1, fontSize: '0.875rem' }}
-                        >
-                            {typeName}
-                        </Typography>
+                        <Chip 
+                            key={index}
+                            label={typeName}
+                            variant={"filled"}
+                            color={"secondary"}
+                        />
                     ))}
                 </Box>
             </Box>

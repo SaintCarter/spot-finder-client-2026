@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router';
 import { 
-  Box, Button, TextField, Typography, Container, Paper, Alert, CircularProgress, Avatar, Radio, RadioGroup, FormControlLabel, FormControl, FormLabel , InputLabel, Select, MenuItem
+  Box, Button, TextField, Typography, Container, Chip, Paper, Alert, CircularProgress, Avatar, Radio, RadioGroup, FormControlLabel, FormControl, FormLabel , InputLabel, Select, MenuItem
 } from '@mui/material';
 import Map from '../components/Map.jsx';
 import { CreateSpot } from '../api/CreateSpot.js';
@@ -55,11 +55,6 @@ export default function CreateSpotPage() {
         console.log(files);
         console.log(selectedFiles);
     };
-
-    const handleTypeChange = (e) => {
-        setSelectedType(e.target.value);
-        console.log(selectedType);
-    }
 
 
     const handleSubmit = async (e) => {
@@ -186,26 +181,36 @@ export default function CreateSpotPage() {
                             <FormControlLabel value="false" control={<Radio />} label="No" />
                         </RadioGroup>
                     </FormControl>
-                    <FormControl sx={{ m: 1, minWidth: 200, width: '50%' }}> 
-                    <InputLabel sx={{}} id="spot-type-label">Spot Features</InputLabel>
+                    <Box sx={{ m: 1, width: '100%' }}>
+                    <Typography sx={{ mb: 1, fontWeight: 500 }}>
+                        Select Spot Features:
+                    </Typography>
+
                     {spotTypes && (
-                        <Select
-                        sx={{}}
-                        labelId="spot-type-label"
-                        id="spot-type-select"
-                        value={selectedType}
-                        label="Spot Type"
-                        onChange={handleTypeChange}
-                        multiple
-                        >
-                        {spotTypes.spotTypes.map((type) => (
-                            <MenuItem sx={{}} key={type.id} value={type.id}>
-                            {type.name}
-                            </MenuItem>
-                        ))}
-                        </Select>
+                        <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1 }}>
+                        {spotTypes.spotTypes.map((type) => {
+                            const selected = selectedType.includes(type.id);
+
+                            return (
+                            <Chip
+                                key={type.id}
+                                label={type.name}
+                                clickable
+                                color={selected ? "primary" : "default"}
+                                variant={selected ? "filled" : "outlined"}
+                                onClick={() => {
+                                setSelectedType((prev) =>
+                                    prev.includes(type.id)
+                                    ? prev.filter((id) => id !== type.id)
+                                    : [...prev, type.id]
+                                );
+                                }}
+                            />
+                            );
+                        })}
+                        </Box>
                     )}
-                    </FormControl>
+                    </Box>
                     <Box sx={{ mb: 2, textAlign: 'center' }}>
                         <Button variant="outlined" component="label" fullWidth sx={{ mb: 1 }}>
                             Upload Media (Must be less than 50mb)
