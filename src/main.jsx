@@ -18,7 +18,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <BrowserRouter>
         <Routes>
           <Route element={<App />}>
-            <Route index element={<HomePage />} />
+            <Route path="/login" element={<HomePage />} />
+            <Route index element={ <MapPage />} />
             <Route
               path="/dashboard"
               element={
@@ -32,14 +33,6 @@ ReactDOM.createRoot(document.getElementById('root')).render(
               element={
                 <ProtectedRoute>
                   <CreatePage />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/dashboard/map"
-              element={
-                <ProtectedRoute>
-                  <MapPage />
                 </ProtectedRoute>
               }
             />

@@ -75,6 +75,22 @@ export default function App() {
                 </Button>
               </>
             )}
+            {!isAuthenticated && (
+              <>
+                <Button color="inherit" component={RouterLink} to="/login" sx={{minWidth:"auto", fontSize:"0.75rem", px:1}}>
+                    Create Account
+                </Button>
+                <Button 
+                  variant="outlined" 
+                  color="inherit" 
+                  onClick={() => navigate('/login')}
+                  sx={{ borderColor: 'rgba(255,255,255,0.5)', minWidth:"auto", fontSize:"0.75rem", px:1}}
+                >
+                  Log In
+                </Button>
+                
+              </>
+            )}
           </Box>
         </Toolbar>
       </AppBar>

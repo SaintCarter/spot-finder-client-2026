@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router';
 import { insertRating, checkRated, updateRating, getRatings } from '../api/Rating';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-
+import { useAuth } from '../context/AuthContext';
 
 
 export default function MapPage() {
@@ -18,6 +18,9 @@ export default function MapPage() {
     const [successMessage, setSuccessMessage] = useState('');
     const [hasntRated, setHasntRated] = useState(true);
     const [ratingCount, setRatingCount] = useState(0);
+    const [createMessage, setCreateMessage] = useState('');
+
+    const { isAuthenticated } = useAuth();
 
     const [anchorEl, setAnchorEl] = useState(null);
 
@@ -27,6 +30,10 @@ export default function MapPage() {
         setRating(0);
         if(spotId == null){
             setErrorMessage('select a spot');
+            return;
+        }
+        if(!isAuthenticated){
+            setErrorMessage('please log in');
             return;
         }
         setErrorMessage('');
@@ -46,6 +53,14 @@ export default function MapPage() {
     const open = Boolean(anchorEl);
 
     const navigate = useNavigate();
+
+    const navigateCreate = () =>{
+        if(!isAuthenticated){
+            setCreateMessage('please log in');
+            return;
+        }
+        navigate('/dashboard/create');
+    }
     
     const submitRating = async () =>{
         setErrorMessage('');
@@ -54,7 +69,10 @@ export default function MapPage() {
             setErrorMessage('select a spot');
             return;
         }
-
+        if(!isAuthenticated){
+            setErrorMessage('please log in');
+            return;
+        }
 
         if(hasntRated){
             const rate = await insertRating(spotId, rating);
@@ -112,6 +130,8 @@ export default function MapPage() {
                 const averageRating = mathRatings(ratingArray);
                 setSpotRating(averageRating);
                 setSuccessMessage('');
+                setErrorMessage('');
+                setCreateMessage('');
                 return;      
         };
 
@@ -128,7 +148,9 @@ export default function MapPage() {
         flexDirection:"column",
         p:2
         }}>
-            <Button onClick={() => navigate('/dashboard/create')} variant="contained" component="label" fullWidth sx={{ mb: 1 }}>Create</Button>
+            
+            {isAuthenticated && <Button onClick={navigateCreate} variant="contained" component="label" fullWidth sx={{ mb: 1 }}>Create</Button>}
+            {!isAuthenticated && <Typography variant="h5" sx={{overflowWrap:"break-word", width:"100%", textAlign:"center"}}><Box component={'a'} href={'/login'} sx={{color:"white"}} >Create A Free Account</Box> To Access All The Features!</Typography>}
             {successMessage && <Alert severity="success">{successMessage}</Alert>}
             <Box sx={{display:'flex', justifyContent:'center', alignItems:'center'}} >
                 <Typography>({ratingCount})</Typography>
