@@ -54,7 +54,7 @@ export default function BigMap({setSelectedSpotId, setSpotData}) {
         source: "locations",
         paint: {
           "circle-radius": 10,
-          "circle-color": "red"
+          "circle-color": "#CF9FFF"
         }
       });
 

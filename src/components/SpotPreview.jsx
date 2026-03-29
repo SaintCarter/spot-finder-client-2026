@@ -22,6 +22,9 @@ export default function SpotPreview({setSpotId}) {
     ]);
     const navigate = useNavigate();
 
+
+    
+
     useEffect(() => {
         if (!spotData || !selectedSpotId) return;
 
@@ -96,7 +99,7 @@ export default function SpotPreview({setSpotId}) {
                             key={index}
                             label={typeName}
                             variant={"filled"}
-                            color={"secondary"}
+                            sx={{color:"#CF9FFF"}}
                         />
                     ))}
                 </Box>

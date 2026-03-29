@@ -14,6 +14,7 @@ import { useAuth } from './context/AuthContext';
 export default function App() {
   const { isAuthenticated, logout, loading, user } = useAuth();
   const navigate = useNavigate();
+  const logo = "/images/meh.png";
 
   const handleLogout = async () => {
     await logout();
@@ -33,9 +34,15 @@ export default function App() {
       {/* Modern Navigation Bar */}
       <AppBar position="static" elevation={2} sx={{borderRadius:1.5, backgroundColor:'#3d3d3d'}}>
         <Toolbar>
+          <Box
+            component={RouterLink} 
+            to="/dashboard/map"
+          >
+            <Box component={'img'} src={logo} alt={"logo"} sx={{width:"auto", height:40, objectFit:"contain", pr:1}} />
+          </Box>
           <Typography 
             component={RouterLink} 
-            to="/" 
+            to="/dashboard/map" 
             sx={{ 
               flexGrow: 1, 
               textDecoration: 'none', 

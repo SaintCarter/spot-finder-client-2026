@@ -5,6 +5,8 @@ import {
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { insertRating, checkRated, updateRating, getRatings } from '../api/Rating';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 
 
 
@@ -15,6 +17,7 @@ export default function MapPage() {
     const [errorMessage, setErrorMessage] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
     const [hasntRated, setHasntRated] = useState(true);
+    const [ratingCount, setRatingCount] = useState(0);
 
     const [anchorEl, setAnchorEl] = useState(null);
 
@@ -78,6 +81,7 @@ export default function MapPage() {
         const ratingArray = ratingData.ratingsArray.ratings;
         const averageRating = mathRatings(ratingArray);
         setSpotRating(averageRating);
+        setRatingCount(ratingArray.length);
         return;
     };
 
@@ -104,6 +108,7 @@ export default function MapPage() {
                 }
                 const ratingArray = ratingData.ratingsArray.ratings;
                 //console.log(ratingArray[0].rating);//displays the int
+                setRatingCount(ratingArray.length);
                 const averageRating = mathRatings(ratingArray);
                 setSpotRating(averageRating);
                 setSuccessMessage('');
@@ -125,8 +130,9 @@ export default function MapPage() {
         }}>
             <Button onClick={() => navigate('/dashboard/create')} variant="contained" component="label" fullWidth sx={{ mb: 1 }}>Create</Button>
             {successMessage && <Alert severity="success">{successMessage}</Alert>}
-            <Box >
-                <Rating name="read-only" value={spotRating} readOnly />
+            <Box sx={{display:'flex', justifyContent:'center', alignItems:'center'}} >
+                <Typography>({ratingCount})</Typography>
+                <Rating sx={{color:"#CF9FFF"}} icon={<FavoriteIcon fontSize="inherit" />} emptyIcon={<FavoriteBorderIcon fontSize="inherit" />} size="large" name="read-only" value={spotRating} readOnly precision={0.1}/>
                 <Button onClick={handleOpen}>Rate</Button>
                 <Popper 
                     open={open}
@@ -151,6 +157,10 @@ export default function MapPage() {
                             <Typography variant="body2">{hasntRated ? 'Rate This Spot!' : 'Update your Rating'}</Typography>
 
                             <Rating
+                                sx={{color:"#CF9FFF"}}
+                                icon={<FavoriteIcon fontSize="inherit" />} 
+                                emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
+                                size="large"
                                 value={rating}
                                 onChange={(event, newValue) => {
                                     setRating(newValue);
