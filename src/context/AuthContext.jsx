@@ -54,14 +54,15 @@ export function AuthProvider({ children }) {
       });
 
       if (!response.ok) {
-        throw new Error('Failed to create account');
+        const errData = await response.json();
+        throw new Error(errData.message || 'Failed to create account');
       }
 
       const data = await response.json();
       return { success: true, data };
     } catch (error) {
       console.error('Create account error:', error);
-      return { success: false, error: error.response?.data?.error || "An unexpected error occurred" };
+      return { success: false, error: error.message || "An unexpected error occurred" };
     }
   };
 
