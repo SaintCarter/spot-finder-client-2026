@@ -8,6 +8,7 @@ import BigMap  from '../components/BigMap.jsx';
 import { getSpotMedia } from '../api/getSpotMedia.js';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
+import MediaBox from '../components/MediaBox.jsx';
 
 
 export default function SpotPreview({setSpotId}) {
@@ -64,30 +65,8 @@ export default function SpotPreview({setSpotId}) {
     <Box sx={{width:"100%", height:"auto", display:"flex", justifyContent:"center", alignItems:"center", flexDirection:"column", p:2 }}>
         <Box sx={{mb:2, minWidth:"100%", minHeight:"40vh", display:"flex", justifyContent:"center", alignItems:"center", gap:2, "@media (max-width:600px)": {flexDirection:"column-reverse"} }}>
             {/* media left side */}
-            <Box sx={{minWidth:"40%", minHeight:"100%", display:"flex", justifyContent:"center", alignItems:"center", border:"1px solid black", borderRadius:1.6, backgroundColor:"#aaaaaa", flexDirection:"column", "@media (max-width:600px)": {minWidth:"100%"}}}>
-                {/* <Box sx={{maxWidth:"200px", maxHeight:"300px", minWidth:"200px", minHeight:"300px", objectFit:"contain"}} component={'img'} src={spotMedia?.[0]?.url || 'https://btxaypoxynjsrsxpbysz.supabase.co/storage/v1/object/public/boards/profile-1773835173008-gx0iqx.png'} />
-                <Button>See More</Button> */}
-                <ImageList sx={{ width: 200, height: 300 }} variant="woven" cols={1} gap={1}>
-                {spotMedia?.map((item) => (
-                    <ImageListItem key={item.url}>
-                    {item.type === "video" ? (
-                        <video
-                        src={item.url}
-                        controls
-                        style={{ width: 200, height: 300, objectFit: "contain" }}
-                        />
-                    ) : (
-                        <img
-                        srcSet={`${item.url}?w=161&fit=crop&auto=format&dpr=2 2x`}
-                        src={`${item.url}?w=161&fit=crop&auto=format`}
-                        alt="spot Image"
-                        loading="lazy"
-                        style={{ width: 200, height: 300, objectFit: "contain" }}
-                        />
-                    )}
-                    </ImageListItem>
-                ))}
-                </ImageList>
+            <Box sx={{minWidth:"40%", minHeight:"100%", display:"flex", justifyContent:"center", alignItems:"center", flexDirection:"column", "@media (max-width:600px)": {minWidth:"100%"}}}>
+                <MediaBox spotMedia={spotMedia}/>
             </Box>
             {/* details right side */}
             <Box sx={{minWidth:"60%",minHeight:"100%", display:"flex", justifyContent:"center", alignItems:"center", flexDirection:"column", gap:2, "@media (max-width:600px)": {minWidth:"100%"}}}>

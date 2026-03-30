@@ -14,7 +14,6 @@ export default function HomePage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [hasAccount, setHasAccount] = useState(true);
   const [email, setEmail] = useState('');
-  const [imageError, setImageError] = useState('');
   const [usernameError, setUsernameError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [emailError, setEmailError] = useState('');
@@ -35,6 +34,11 @@ export default function HomePage() {
       // Create account logic
       if (username.length < 3 || username.length > 30) {
         setUsernameError(`Username must be between 3 and 30 characters. your username is ${username.length} characters long`);
+        setIsSubmitting(false);
+        return;
+      }
+      if (email.length < 3 || email.length > 50) {
+        setEmailError(`Email must be between 3 and 30 characters. your email is ${email.length} characters long`);
         setIsSubmitting(false);
         return;
       }
@@ -109,7 +113,7 @@ export default function HomePage() {
           </Avatar>
 
           <Typography variant="h4" sx={{ fontWeight: 700, mb: 3 }}>
-            {hasAccount ? 'Welcome Back' : 'Create Account'}
+            {hasAccount ? 'Log In' : 'Create Account'}
           </Typography>
 
           {error && <Alert severity="error" sx={{ width: '100%', mb: 2 }}>{error}</Alert>}
@@ -157,7 +161,7 @@ export default function HomePage() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value.toLowerCase())}
                   error={!!emailError}
-                  helperText={emailError || 'We Accept Fake Email! :)'}
+                  helperText={emailError || 'We Accept Fake Email, However, Account Recovery Will Not be possible'}
                   sx={{ mb: 2 }}
                 />
               </>
