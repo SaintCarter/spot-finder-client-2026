@@ -120,7 +120,7 @@ export default function HomePage() {
               fullWidth
               label="Username"
               value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              onChange={(e) => setUsername(e.target.value.toLowerCase())}
               error={!!usernameError}
               helperText={usernameError}
               sx={{ mb: 1 }}
@@ -155,7 +155,7 @@ export default function HomePage() {
                   fullWidth
                   label="Email"
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={(e) => setEmail(e.target.value.toLowerCase())}
                   error={!!emailError}
                   helperText={emailError || 'We Accept Fake Email! :)'}
                   sx={{ mb: 2 }}
