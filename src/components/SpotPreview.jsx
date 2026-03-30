@@ -61,10 +61,10 @@ export default function SpotPreview({setSpotId}) {
     }, [selectedSpotId, spotData]);
 
     return (
-    <Box sx={{width:"100%", height:"auto", display:"flex", justifyContent:"center", alignItems:"center", flexDirection:"column", p:2}}>
-        <Box sx={{minWidth:"100%", minHeight:"40vh", display:"flex", justifyContent:"center", alignItems:"center", gap:2, }}>
+    <Box sx={{width:"100%", height:"auto", display:"flex", justifyContent:"center", alignItems:"center", flexDirection:"column", p:2 }}>
+        <Box sx={{mb:2, minWidth:"100%", minHeight:"40vh", display:"flex", justifyContent:"center", alignItems:"center", gap:2, "@media (max-width:600px)": {flexDirection:"column-reverse"} }}>
             {/* media left side */}
-            <Box sx={{minWidth:"40%", minHeight:"100%", display:"flex", justifyContent:"center", alignItems:"center", border:"1px solid black", borderRadius:1.6, backgroundColor:"#aaaaaa", flexDirection:"column"}}>
+            <Box sx={{minWidth:"40%", minHeight:"100%", display:"flex", justifyContent:"center", alignItems:"center", border:"1px solid black", borderRadius:1.6, backgroundColor:"#aaaaaa", flexDirection:"column", "@media (max-width:600px)": {minWidth:"100%"}}}>
                 {/* <Box sx={{maxWidth:"200px", maxHeight:"300px", minWidth:"200px", minHeight:"300px", objectFit:"contain"}} component={'img'} src={spotMedia?.[0]?.url || 'https://btxaypoxynjsrsxpbysz.supabase.co/storage/v1/object/public/boards/profile-1773835173008-gx0iqx.png'} />
                 <Button>See More</Button> */}
                 <ImageList sx={{ width: 200, height: 300 }} variant="woven" cols={1} gap={1}>
@@ -90,7 +90,7 @@ export default function SpotPreview({setSpotId}) {
                 </ImageList>
             </Box>
             {/* details right side */}
-            <Box sx={{minWidth:"60%",minHeight:"100%", display:"flex", justifyContent:"center", alignItems:"center", flexDirection:"column", gap:2}}>
+            <Box sx={{minWidth:"60%",minHeight:"100%", display:"flex", justifyContent:"center", alignItems:"center", flexDirection:"column", gap:2, "@media (max-width:600px)": {minWidth:"100%"}}}>
                 <Typography variant="h3" sx={{overflowWrap:"break-word", width:"80%"}}>{selectedSpotData?.name || 'Select a point on the map'}</Typography>
                 <Typography sx={{border:"1px solid black", width:"80%", borderRadius:1, p:1}}>{selectedSpotData?.description || 'to see that spots data'}</Typography>
                 <Box sx={{display: 'flex', gap: 1, flexWrap: 'wrap', width: "80%"}}>

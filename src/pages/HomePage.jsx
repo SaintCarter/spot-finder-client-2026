@@ -14,51 +14,52 @@ export default function HomePage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [hasAccount, setHasAccount] = useState(true);
   const [email, setEmail] = useState('');
-  const [selectedFile, setSelectedFile] = useState(null);
   const [imageError, setImageError] = useState('');
+  const [usernameError, setUsernameError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+  const [emailError, setEmailError] = useState('');
 
-  const handleFileChange = (e) => {
-    if (e.target.files && e.target.files[0]) {
-      setSelectedFile(e.target.files[0]);
-    }
-  };
+
   const { login, createAccount } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+    setPasswordError('');
+    setUsernameError('');
+    setEmailError('');
     setIsSubmitting(true);
     
     if (!hasAccount) {
       // Create account logic
       if (username.length < 3 || username.length > 30) {
-        setError(`Username must be between 3 and 30 characters. your username is ${username.length} characters long`);
+        setUsernameError(`Username must be between 3 and 30 characters. your username is ${username.length} characters long`);
         setIsSubmitting(false);
         return;
       }
       if (password !== confirmPassword) {
-        setError('Passwords do not match');
+        setPasswordError('Passwords do not match');
         setIsSubmitting(false);
         return;
       }
       if (password.length < 10 || password.length > 20) {
-        setError(`Password must be between 10 and 20 characters. your password is ${password.length} characters long`);
+        setPasswordError(`Password must be between 10 and 20 characters. your password is ${password.length} characters long`);
         setIsSubmitting(false);
         return;
       }
       if (!email) {
-        setError('Email is required');
+        setEmailError('Email is required');
         setIsSubmitting(false);
         return;
       }
       if(!username){
-        setError('Username is required');
+        setUsernameError('Username is required');
         setIsSubmitting(false);
         return;
       }
       if (!password || !confirmPassword) {
-        setError('All password fields are required');
+        setPasswordError('All password fields are required');
         setIsSubmitting(false);
         return;
       }
@@ -70,6 +71,9 @@ export default function HomePage() {
         setEmail('');
         setPassword('');
         setConfirmPassword('');
+        setPasswordError('');
+        setUsernameError('');
+        setEmailError('');
         setHasAccount(true);
         setIsSubmitting(false);
         return;
@@ -107,9 +111,6 @@ export default function HomePage() {
           <Typography variant="h4" sx={{ fontWeight: 700, mb: 3 }}>
             {hasAccount ? 'Welcome Back' : 'Create Account'}
           </Typography>
-          {!hasAccount && (
-            <Typography>We accept fake email!</Typography>
-          )}
 
           {error && <Alert severity="error" sx={{ width: '100%', mb: 2 }}>{error}</Alert>}
 
@@ -120,9 +121,10 @@ export default function HomePage() {
               label="Username"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
+              error={!!usernameError}
+              helperText={usernameError}
               sx={{ mb: 1 }}
             />
-            {!hasAccount && (<Typography sx={{m:0, p:0, color: 'blue',fontSize:'12px'}}>(must be between 3 and 30 characters)</Typography>)}
             <TextField
               margin="normal"
               fullWidth
@@ -130,9 +132,10 @@ export default function HomePage() {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              error={!!passwordError}
+              helperText={passwordError}
               sx={{ mb: hasAccount ? 3 : 1 }}
             />
-           {!hasAccount && (<Typography sx={{m:0, p:0, color: 'blue',fontSize:'12px'}}>(must be between 10 and 20 characters)</Typography>)}
 
             {!hasAccount && (
               <>
@@ -143,6 +146,8 @@ export default function HomePage() {
                   type="password"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
+                  error={!!passwordError}
+                  helperText={passwordError}
                   sx={{ mb: 2 }}
                 />
                 <TextField
@@ -151,6 +156,8 @@ export default function HomePage() {
                   label="Email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
+                  error={!!emailError}
+                  helperText={emailError || 'We Accept Fake Email! :)'}
                   sx={{ mb: 2 }}
                 />
               </>

@@ -95,9 +95,9 @@ export default function CreatePostPage() {
         justifyContent:"center",
         flexDirection:"column",
         p:2,
-        width:"100%"
+        
         }}>
-            <Paper elevation={6} sx={{ p: 4, borderRadius: 3, display: 'flex', flexDirection: 'column', alignItems: 'center', width:"100%" }}>
+            <Paper elevation={6} sx={{ p: 4, borderRadius: 3, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent:"center", width:"100%" }}>
                 {error && <Alert severity="error" sx={{ width: '100%', mb: 2 }}>{error}</Alert>}
                 <Box component="form" onSubmit={handleSubmit} noValidate sx={{ width: '100%'  }}>
                     <Button variant="outlined" component="label" fullWidth sx={{ mb: 1 }}>
@@ -131,8 +131,15 @@ export default function CreatePostPage() {
                     maxRows={10}
                     />
                     <Typography sx={{fontWeight:'bold', fontSize:24, textAlign:"center"}}>FIND THE SPOT FOR YOUR POST USING THE MAP BELOW</Typography>
-                    <SpotPreview setSpotId={setSpotId} />
-                    <Typography>Select Spot Id: {spotId}</Typography>
+                    <Box sx={{ 
+                    height: 'auto', 
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    justifyContent:"center",
+                    }}>
+                        <SpotPreview setSpotId={setSpotId} />
+                    </Box>
+                    <Typography>Selected Spot Id: {spotId}</Typography>
                     <Button
                         type="submit"
                         fullWidth

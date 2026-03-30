@@ -37,6 +37,7 @@ export default function App() {
           <Box
             component={RouterLink} 
             to="/dashboard/map"
+            
           >
             <Box component={'img'} src={logo} alt={"logo"} sx={{width:"auto", height:40, objectFit:"contain", pr:1}} />
           </Box>
@@ -49,7 +50,7 @@ export default function App() {
               color: 'inherit',
               fontWeight: 600,
               fontStyle:"Dela Gothic One",
-              "@media (max-width:600px)": {display:"none"}
+              
             }}
           >
             SKATE.MAP
@@ -62,7 +63,7 @@ export default function App() {
                 <Button color="inherit" component={RouterLink} to="/dashboard" sx={{minWidth:"auto", fontSize:"0.75rem", px:1}}>
                   Dashboard
                 </Button>
-                <Button color="inherit" component={RouterLink} to="/settings" sx={{minWidth:"auto", fontSize:"0.75rem", px:1}}>
+                <Button  color="inherit" component={RouterLink} to="/settings" sx={{minWidth:"auto", fontSize:"0.75rem", px:1, "@media (max-width:600px)": {display:"none"}}}>
                   Settings
                 </Button>
                 <Button 
@@ -77,7 +78,12 @@ export default function App() {
             )}
             {!isAuthenticated && (
               <>
-                <Button color="inherit" component={RouterLink} to="/login" sx={{minWidth:"auto", fontSize:"0.75rem", px:1}}>
+                <Button 
+                color="inherit" 
+                component={RouterLink} 
+                to="/login" 
+                sx={{minWidth:"auto", fontSize:"0.75rem", px:1, "@media (max-width:600px)": {display:"none"}}}
+                >
                     Create Account
                 </Button>
                 <Button 
