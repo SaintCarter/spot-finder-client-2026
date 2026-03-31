@@ -2,29 +2,36 @@ import { useEffect, useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router';
 import { 
-  Box, Button, Chip, TextField, Typography, Container, Paper, Alert, CircularProgress, Avatar 
+  Box, Button, Chip, TextField, Typography, Container, Paper, Alert, CircularProgress, Avatar, Link, IconButton 
 } from '@mui/material';
 import BigMap  from '../components/BigMap.jsx';
 import { getSpotMedia } from '../api/getSpotMedia.js';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import MediaBox from '../components/MediaBox.jsx';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 
 
 export default function SpotPreview({setSpotId}) {
+    const [location, setLocation] = useState(null);
     const [selectedSpotId, setSelectedSpotId] = useState('');
     const [spotData, setSpotData] = useState(null);
     const [selectedSpotData, setSelectedSpotData] = useState(null);
     //const [spotMedia, setSpotMedia] = useState([]);
     const [DataTypes, setDataTypes] = useState([]);
-    const defaultMediaUrl = 'https://btxaypoxynjsrsxpbysz.supabase.co/storage/v1/object/public/boards/profile-1774162792571-8yyub8.png';
+    const defaultMediaUrl = '/images/skatemap.png';
     const [spotMedia, setSpotMedia] = useState([
         { url: defaultMediaUrl, type: 'image' }
     ]);
     const navigate = useNavigate();
 
+    const handleCopyLocation = () => {
+        const locationString = `${location.lat} , ${location.lng}`;
+        navigator.clipboard.writeText(locationString);
+    };
 
-    
+
+
 
     useEffect(() => {
         if (!spotData || !selectedSpotId) return;
@@ -35,6 +42,11 @@ export default function SpotPreview({setSpotId}) {
             (spot) => spot.id === selectedSpotId
         );
         setSelectedSpotData(selectedData || null);
+        //console.log(selectedData); returns all of spot table row
+        setLocation({
+            lat: selectedData.latitude, 
+            lng: selectedData.longitude
+        });
 
         //spot_has_types table
         const matchingTypes = spotData.types
@@ -81,6 +93,33 @@ export default function SpotPreview({setSpotId}) {
                             sx={{color:"#CF9FFF"}}
                         />
                     ))}
+                </Box>
+                <Box sx={{display:"flex", justifyContent:"flex-start", alignItems:"center", width:"80%", gap:2}}>
+                    <IconButton onClick={handleCopyLocation}>
+                        <ContentCopyIcon />
+                    </IconButton>
+                    <Link
+                    href={
+                        location
+                        ? `https://www.google.com/maps/search/?api=1&query=${location.lat}%2C${location.lng}`
+                        : "#"
+                    }
+                    rel="noopener noreferrer"
+                    underline="hover"
+                    >
+                    Open in Google Maps
+                    </Link>
+                    <Link
+                        href={
+                            location
+                            ? `https://maps.apple.com/?q=${`${location.lat},${location.lng}`}`
+                            : "#"
+                        }
+                        rel="noopener noreferrer"
+                        underline="hover"
+                    >
+                        Open in Apple Maps
+                    </Link>
                 </Box>
             </Box>
         </Box>

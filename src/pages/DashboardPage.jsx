@@ -41,7 +41,7 @@ const apiUrl = import.meta.env.VITE_API_URL;
           <Box component={'img'} src={data.image} alt={'skateboard'} sx={{width:"auto", height:60, objectFit:"contain"}}></Box>
         </Box>
         <Box sx={{ width:"100%",display:"flex", justifyContent:"space-around", alignItems:"center", mt:2, bgcolor:"#3d3d3d", p:1, borderRadius:1, gap:1}}>
-          <Box sx={{"&:hover": { filter: "brightness(1.2)", transform: "scale(1.02)"}, cursor:"pointer", color:"white",filter: "brightness(0.8)", minHeight:"80vh", width:"33%", justifyContent:"center", alignItems:"center", display:"flex", backgroundImage:"url('/images/reels.webp')", backgroundRepeat:"none", backgroundSize:"cover", backgroundPosition:"center", }}>
+          <Box onClick={() => navigate('/dashboard/reels')} sx={{"&:hover": { filter: "brightness(1.2)", transform: "scale(1.02)"}, cursor:"pointer", color:"white",filter: "brightness(0.8)", minHeight:"80vh", width:"33%", justifyContent:"center", alignItems:"center", display:"flex", backgroundImage:"url('/images/reels.webp')", backgroundRepeat:"none", backgroundSize:"cover", backgroundPosition:"center", }}>
             <Typography sx={{width:"100%", textAlign:"center", fontWeight: 'bold', fontSize:28}}>REELS</Typography>
           </Box>
           <Box sx={{width:"33%", display:"flex", flexDirection:"column", gap:1}}>

@@ -10,6 +10,7 @@ import SettingsPage from './pages/SettingsPage'
 import CreatePage from './pages/CreatePage'
 import CreateSpotPage from './pages/CreateSpotPage.jsx'
 import CreatePostPage from './pages/CreatePostPage.jsx'
+import ReelsPage from './pages/ReelsPage.jsx'
 import MapPage from './pages/MapPage.jsx'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
@@ -49,6 +50,14 @@ ReactDOM.createRoot(document.getElementById('root')).render(
               element={
                 <ProtectedRoute>
                   <CreateSpotPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/dashboard/reels"
+              element={
+                <ProtectedRoute>
+                  <ReelsPage />
                 </ProtectedRoute>
               }
             />
