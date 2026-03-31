@@ -10,9 +10,11 @@ import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import MediaBox from '../components/MediaBox.jsx';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import { getSpotPosts } from '../api/getSpotPosts';
 
 
-export default function SpotPreview({setSpotId}) {
+
+export default function SpotPreview({setSpotId, setSpotName}) {
     const [location, setLocation] = useState(null);
     const [selectedSpotId, setSelectedSpotId] = useState('');
     const [spotData, setSpotData] = useState(null);
@@ -23,14 +25,37 @@ export default function SpotPreview({setSpotId}) {
     const [spotMedia, setSpotMedia] = useState([
         { url: defaultMediaUrl, type: 'image' }
     ]);
+    const [error, setError] = useState('');
+
     const navigate = useNavigate();
+    const { isAuthenticated } = useAuth();
+
 
     const handleCopyLocation = () => {
         const locationString = `${location.lat} , ${location.lng}`;
         navigator.clipboard.writeText(locationString);
     };
 
-
+    const handleViewPosts = async () => {
+        if  (!isAuthenticated){
+            setError('please log in');
+            return;
+        }
+        if (!selectedSpotId) {
+            setError('please select a spot');
+            return;
+        }
+        const posts = await getSpotPosts({spotId: selectedSpotId});
+        console.log(posts);
+        if(posts.postDetails.length < 1 || !posts.postDetails){
+            setError('No Posts for this Spot yet');
+            return;
+        }
+        const spotName = selectedSpotData.name;
+        navigate('/dashboard/reels', {
+            state: { selectedSpotId, spotName }
+        });
+    };
 
 
     useEffect(() => {
@@ -47,6 +72,8 @@ export default function SpotPreview({setSpotId}) {
             lat: selectedData.latitude, 
             lng: selectedData.longitude
         });
+
+        setSpotName(selectedData.name);
 
         //spot_has_types table
         const matchingTypes = spotData.types
@@ -121,8 +148,12 @@ export default function SpotPreview({setSpotId}) {
                         Open in Apple Maps
                     </Link>
                 </Box>
+                <Box sx={{display:"flex", justifyContent:"flex-start", alignItems:"center", width:"80%", gap:2}}>
+                    <Button variant="contained" onClick={handleViewPosts}>View Posts</Button>
+                </Box>
             </Box>
         </Box>
+        {error && <Alert severity="error" sx={{ width: '97%', mb: 2 }}>{error}</Alert>}
         <BigMap setSpotData={setSpotData} setSelectedSpotId={setSelectedSpotId}/>
     </Box>
 

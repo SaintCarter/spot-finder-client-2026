@@ -6,14 +6,15 @@ import { useEffect, useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { CreatePost } from '../api/CreatePost.js';
 
-
-
 export default function CreatePostPage() {
     const [spotId, setSpotId] = useState(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [caption, setCaption] = useState('');
     const [error, setError] = useState('');
     const [selectedFiles, setSelectedFiles] = useState([]);
+    const [mapOpen, setMapOpen] = useState(false);
+    const [spotName, setSpotName] = useState('');
+
     const {  loading, user } = useAuth();
 
     useEffect(() => {
@@ -131,15 +132,23 @@ export default function CreatePostPage() {
                     maxRows={10}
                     />
                     <Typography sx={{fontWeight:'bold', fontSize:24, textAlign:"center"}}>FIND THE SPOT FOR YOUR POST USING THE MAP BELOW</Typography>
-                    <Box sx={{ 
-                    height: 'auto', 
-                    display: 'flex', 
-                    alignItems: 'center', 
-                    justifyContent:"center",
-                    }}>
-                        <SpotPreview setSpotId={setSpotId} />
-                    </Box>
-                    <Typography>Selected Spot Id: {spotId}</Typography>
+                    {!mapOpen && (
+                        <Button fullWidth onClick={() => setMapOpen(true)}>Open Map</Button>
+                    )}
+                    {mapOpen && (
+                        <Button fullWidth onClick={() => setMapOpen(false)}>Close Map</Button>
+                    )}
+                    {mapOpen && (
+                        <Box sx={{ 
+                        height: 'auto', 
+                        display: 'flex', 
+                        alignItems: 'center', 
+                        justifyContent:"center",
+                        }}>
+                            <SpotPreview setSpotName={setSpotName} setSpotId={setSpotId} />
+                        </Box>
+                    )}
+                    <Typography>Selected Spot: {spotName}</Typography>
                     <Button
                         type="submit"
                         fullWidth

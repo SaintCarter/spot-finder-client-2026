@@ -42,27 +42,29 @@ export function MobilePostBox({spotMedia}) {
                             <ArrowBackIosIcon />
                         </IconButton>
                     )}
-                    {spotMedia[index] ? (
-                        spotMedia[index].type === "video" ? (
-                            <video
-                                key={spotMedia[index].url} 
-                                src={spotMedia[index].url}
-                                controls
-                                style={{ width: 250, height: 360, objectFit: "contain" }}
-                            />
+                    <Box sx={{backgroundColor:"black"}}>
+                        {spotMedia[index] ? (
+                            spotMedia[index].type === "video" ? (
+                                <video
+                                    key={spotMedia[index].url} 
+                                    src={spotMedia[index].url}
+                                    controls
+                                    style={{ width: 250, height: 360, objectFit: "contain" }}
+                                />
+                            ) : (
+                                <img
+                                    src={`${spotMedia[index].url}?w=161&fit=crop&auto=format`}
+                                    alt="spot Image"
+                                    style={{ width: 250, height: 360, objectFit: "contain" }}
+                                />
+                            )
                         ) : (
-                            <img
-                                src={`${spotMedia[index].url}?w=161&fit=crop&auto=format`}
-                                alt="spot Image"
-                                style={{ width: 250, height: 360, objectFit: "contain" }}
-                            />
-                        )
-                    ) : (
-                        
-                        <Box sx={{ width: 250, height: 360, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                            <CircularProgress />
-                        </Box>
-                    )}
+                            
+                            <Box sx={{ width: 250, height: 360, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                <CircularProgress />
+                            </Box>
+                        )}
+                    </Box>
                     {!isSingle && (
                         <IconButton onClick={handleForward}>
                             <ArrowForwardIosIcon />
@@ -113,27 +115,29 @@ export function DesktopPostBox({spotMedia}) {
                             <ArrowBackIosIcon />
                         </IconButton>
                     )}
-                    {spotMedia[index] ? (
-                        spotMedia[index].type === "video" ? (
-                            <video
-                                key={spotMedia[index].url} 
-                                src={spotMedia[index].url}
-                                controls
-                                style={{ width: 700, height: 800, objectFit: "contain" }}
-                            />
+                    <Box sx={{backgroundColor:"black"}}>
+                        {spotMedia[index] ? (
+                            spotMedia[index].type === "video" ? (
+                                <video
+                                    key={spotMedia[index].url} 
+                                    src={spotMedia[index].url}
+                                    controls
+                                    style={{ width: 700, height: 800, objectFit: "contain" }}
+                                />
+                            ) : (
+                                <img
+                                    src={`${spotMedia[index].url}?w=161&fit=crop&auto=format`}
+                                    alt="spot Image"
+                                    style={{ width: 700, height: 800, objectFit: "contain" }}
+                                />
+                            )
                         ) : (
-                            <img
-                                src={`${spotMedia[index].url}?w=161&fit=crop&auto=format`}
-                                alt="spot Image"
-                                style={{ width: 700, height: 800, objectFit: "contain" }}
-                            />
-                        )
-                    ) : (
-                        
-                        <Box sx={{ width: 700, height: 800, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                            <CircularProgress />
-                        </Box>
-                    )}
+                            
+                            <Box sx={{ width: 700, height: 800, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                <CircularProgress />
+                            </Box>
+                        )}
+                    </Box>
                     {!isSingle && (
                         <IconButton onClick={handleForward}>
                             <ArrowForwardIosIcon />

@@ -42,27 +42,29 @@ export default function MediaBox({spotMedia}) {
                             <ArrowBackIosIcon />
                         </IconButton>
                     )}
-                    {spotMedia[index] ? (
-                        spotMedia[index].type === "video" ? (
-                            <video
-                                key={spotMedia[index].url} 
-                                src={spotMedia[index].url}
-                                controls
-                                style={{ width: 280, height: 400, objectFit: "contain" }}
-                            />
+                    <Box sx={{backgroundColor:"black"}}>
+                        {spotMedia[index] ? (
+                            spotMedia[index].type === "video" ? (
+                                <video
+                                    key={spotMedia[index].url} 
+                                    src={spotMedia[index].url}
+                                    controls
+                                    style={{ width: 280, height: 420, objectFit: "contain" }}
+                                />
+                            ) : (
+                                <img
+                                    src={`${spotMedia[index].url}?w=161&fit=crop&auto=format`}
+                                    alt="spot Image"
+                                    style={{ width: 280, height: 420, objectFit: "contain" }}
+                                />
+                            )
                         ) : (
-                            <img
-                                src={`${spotMedia[index].url}?w=161&fit=crop&auto=format`}
-                                alt="spot Image"
-                                style={{ width: 280, height: 400, objectFit: "contain" }}
-                            />
-                        )
-                    ) : (
-                        
-                        <Box sx={{ width: 280, height: 400, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                            <CircularProgress />
-                        </Box>
-                    )}
+                            
+                            <Box sx={{ width: 280, height: 420, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                <CircularProgress />
+                            </Box>
+                        )}
+                    </Box>
                     {!isSingle && (
                         <IconButton onClick={handleForward}>
                             <ArrowForwardIosIcon />

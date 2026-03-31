@@ -19,10 +19,15 @@ export default function MapPage() {
     const [hasntRated, setHasntRated] = useState(true);
     const [ratingCount, setRatingCount] = useState(0);
     const [createMessage, setCreateMessage] = useState('');
+    const [spotName, setSpotName] = useState('');
+    const [anchorEl, setAnchorEl] = useState(null);
 
     const { isAuthenticated } = useAuth();
+    const open = Boolean(anchorEl);
+    const navigate = useNavigate();
 
-    const [anchorEl, setAnchorEl] = useState(null);
+
+
 
     const handleOpen = async (event) => {
         setAnchorEl(anchorEl ? null : event.currentTarget);
@@ -50,9 +55,7 @@ export default function MapPage() {
         setRating(hasRated.rating);
     };
 
-    const open = Boolean(anchorEl);
 
-    const navigate = useNavigate();
 
     const navigateCreate = () =>{
         if(!isAuthenticated){
@@ -118,6 +121,7 @@ export default function MapPage() {
 
     useEffect(() => {
         if (spotId == null) return;
+
         const fetchRatings = async () => {
                 const ratingData = await getRatings(spotId);
                 if(!ratingData.success){
@@ -201,7 +205,7 @@ export default function MapPage() {
                     </ClickAwayListener>
                 </Popper>
             </Box>
-            <SpotPreview setSpotId={setSpotId} />
+            <SpotPreview setSpotName={setSpotName} setSpotId={setSpotId} />
         </Box>
     );
 }
