@@ -117,7 +117,7 @@ export default function BigMap({setSelectedSpotId, setSpotData}) {
           loading...
         </div>
       )}
-      <div style={{ position: "absolute", top: 10, right: 10, zIndex: 1, width: "300px" }}>
+      <div style={{ position: "absolute", top: 10, right: 10, zIndex: 1, width: "250px" }}>
         <SearchBox
           accessToken={import.meta.env.VITE_MAP_BOX_API_KEY}
           map={mapRef.current}
