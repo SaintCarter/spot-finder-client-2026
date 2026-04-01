@@ -144,11 +144,15 @@ export default function CreatePostPage() {
                         display: 'flex', 
                         alignItems: 'center', 
                         justifyContent:"center",
+                        bgcolor:"#3d3d3d"
                         }}>
                             <SpotPreview setSpotName={setSpotName} setSpotId={setSpotId} />
                         </Box>
                     )}
-                    <Typography>Selected Spot: {spotName}</Typography>
+                    {mapOpen && (
+                        <Button fullWidth onClick={() => setMapOpen(false)}>Close Map</Button>
+                    )}
+                    <Typography sx={{color:"black", fontSize:20}}>Selected Spot: <Box component="span" sx={{color:"#CF9FFF", fontSize:32}}>{spotName}</Box></Typography>
                     <Button
                         type="submit"
                         fullWidth

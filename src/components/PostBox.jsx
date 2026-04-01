@@ -38,7 +38,7 @@ export function MobilePostBox({spotMedia}) {
         <>
             <Box sx={{display:"flex", justifyContent:"center", alignItems:"center", }}>
                     {!isSingle && (
-                        <IconButton onClick={handleBack}>
+                        <IconButton sx={{color:"white"}} onClick={handleBack}>
                             <ArrowBackIosIcon />
                         </IconButton>
                     )}
@@ -66,7 +66,7 @@ export function MobilePostBox({spotMedia}) {
                         )}
                     </Box>
                     {!isSingle && (
-                        <IconButton onClick={handleForward}>
+                        <IconButton sx={{color:"white"}} onClick={handleForward}>
                             <ArrowForwardIosIcon />
                         </IconButton>
                     )}
@@ -111,7 +111,7 @@ export function DesktopPostBox({spotMedia}) {
         <>
             <Box sx={{display:"flex", justifyContent:"center", alignItems:"center", }}>
                     {!isSingle && (
-                        <IconButton onClick={handleBack}>
+                        <IconButton sx={{color:"white"}} onClick={handleBack}>
                             <ArrowBackIosIcon />
                         </IconButton>
                     )}
@@ -139,7 +139,7 @@ export function DesktopPostBox({spotMedia}) {
                         )}
                     </Box>
                     {!isSingle && (
-                        <IconButton onClick={handleForward}>
+                        <IconButton sx={{color:"white"}} onClick={handleForward}>
                             <ArrowForwardIosIcon />
                         </IconButton>
                     )}

@@ -30,16 +30,15 @@ const apiUrl = import.meta.env.VITE_API_URL;
     fetchData();
   }, [logout, navigate]);
 
-  if (!data) return <p>Loading secure data...</p>;
 
   return (
     <Box sx={{ p: 0 }}>
       <Box sx={{width:"100%", color:"#212121", height:"auto", display:"flex", justifyContent:"center", alignItems:"center", flexDirection:"column",}}>
-        <Box sx={{width:"100%",display:"flex", justifyContent:"space-between", alignItems:"center", bgcolor:"#aaaaaa", p:1, borderRadius:1}}>
+        {/*<Box sx={{width:"100%",display:"flex", justifyContent:"space-between", alignItems:"center", bgcolor:"#aaaaaa", p:1, borderRadius:1}}>
           <Typography sx={{ fontWeight: 'bold' }}>cash: x </Typography>
           <Typography sx={{ fontWeight: 'bold' }}>Spin the Wheel</Typography>
           <Box component={'img'} src={data.image} alt={'skateboard'} sx={{width:"auto", height:60, objectFit:"contain"}}></Box>
-        </Box>
+        </Box>*/}
         <Box sx={{ width:"100%",display:"flex", justifyContent:"space-around", alignItems:"center", mt:2, bgcolor:"#3d3d3d", p:1, borderRadius:1, gap:1}}>
           <Box onClick={() => navigate('/dashboard/reels')} sx={{"&:hover": { filter: "brightness(1.2)", transform: "scale(1.02)"}, cursor:"pointer", color:"white",filter: "brightness(0.8)", minHeight:"80vh", width:"33%", justifyContent:"center", alignItems:"center", display:"flex", backgroundImage:"url('/images/reels.webp')", backgroundRepeat:"none", backgroundSize:"cover", backgroundPosition:"center", }}>
             <Typography sx={{width:"100%", textAlign:"center", fontWeight: 'bold', fontSize:28}}>REELS</Typography>

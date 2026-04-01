@@ -9,11 +9,10 @@ import { getPosts, getPostDetails } from '../api/getPosts';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import CloseIcon from '@mui/icons-material/Close';
-import MediaBox from '../components/MediaBox';
 import { DesktopPostBox, MobilePostBox } from '../components/PostBox';
 import { useLocation } from 'react-router';
 import { getSpotPosts } from '../api/getSpotPosts';
-
+import { getUsername } from '../api/getUsername';
 
 
 
@@ -22,17 +21,17 @@ export default function ReelsPage() {
     const navigate = useNavigate();
     const [postData, setPostData] = useState([]);
     const [thumbnailData, setThumbnailData] = useState([]);
-    const [anchorEl, setAnchorEl] = useState(null);
     const [selectedPostId, setSelectedPostId] = useState('');
     const [selectedPostArray, setSelectedPostArray] = useState('');
     const [postInfo, setPostInfo] = useState(null);
     const [spotPostArray, setSpotPostArray] = useState([]);
-    const [spotPostThumbnails, setSpotPostThumbnails] = useState([]);
     const [spotId, setSpotId] = useState('');
     const [spotName, setSpotName] = useState('');
     const [mapOpen, setMapOpen] = useState(false);
     const [initialSpotId, setInitialSpotId] = useState(location.state?.selectedSpotId || '');
     const [initialSpotName, setInitialSpotName] = useState(location.state?.spotName || '');
+    const [creatorName, setCreatorName] = useState('');
+
 
 
     useEffect(() => {
@@ -94,10 +93,15 @@ export default function ReelsPage() {
         setSelectedPostId(postId);
         const filteredArray = postData.filter(item => item.postid === postId);
         setSelectedPostArray(filteredArray);
-        console.log(postId);
+        //console.log(postId);
         const response = await getPostDetails({postId: postId});
-        console.log(response.postDetails.postDetails);
+        //console.log(response.postDetails.postDetails);
         setPostInfo(response.postDetails.postDetails);
+        const creatorId = response?.postDetails?.postDetails?.creatorid;
+        if(creatorId){
+            const creator = await getUsername({userId: creatorId});
+            setCreatorName(creator.username.username);
+        }
     }
 
     return (
@@ -125,10 +129,11 @@ export default function ReelsPage() {
             >
                 <ClickAwayListener onClickAway={() => setSelectedPostId('')}>
                     <Box sx={{width:"auto", backgroundColor:"#3d3d3d", display:"flex", justifyContent:"center", alignItems:"center", flexDirection:"column", gap:2, p:2}}>
-                        <IconButton onClick={() => setSelectedPostId('')} sx={{alignSelf:"flex-end"}}>
-                            <CloseIcon />
+                        <IconButton size="large" onClick={() => setSelectedPostId('')} sx={{alignSelf:"flex-end", color:"white"}}>
+                            <CloseIcon size="large" />
                         </IconButton>
-                        <Typography>{postInfo?.caption || ''}</Typography>
+                        <Typography sx={{color:"white", fontSize:24}}>{postInfo?.caption || ''}</Typography>
+                    <Typography sx={{color:"white", fontSize:14}}>Created By <Box component="span" sx={{color:"#CF9FFF", fontSize:18, textDecoration:"underline", cursor:"pointer"}}>{creatorName}</Box></Typography>
                         <Box sx={{minWidth:"40%", minHeight:"100%", display:"flex", justifyContent:"center", alignItems:"center", flexDirection:"column", "@media (max-width:600px)": {minWidth:"100%"}}}>
                             {isMobile ? (
                                 <MobilePostBox spotMedia={selectedPostArray}/>
@@ -151,7 +156,7 @@ export default function ReelsPage() {
             }}>
                 {!mapOpen && (
                     <Box sx={{gap:2, mb:2, width:"100%", display:'flex', justifyContent:"flex-start", alignItems:"center"}}>
-                        <Typography>Filter By Spot:</Typography>
+                        <Typography sx={{color:"white", fontSize:20}}>Filter By Spot:</Typography>
                         <Button variant="contained" onClick={() => setMapOpen(true)}>Open Map</Button>
                         {(spotId || initialSpotId) && <Button onClick={clearFilters}>Clear Filters</Button>}
                     </Box>
@@ -177,11 +182,11 @@ export default function ReelsPage() {
             </Box>
             {(spotId || initialSpotId) && (
                 <Box sx={{width:"100%", display:'flex', justifyContent:"flex-start", alignItems:"center"}}>
-                    <Typography>Selected Spot: <Box component="span" sx={{color:"white", fontSize:22}}>{spotName}</Box></Typography>
+                    <Typography sx={{color:"white", fontSize:20}}>Selected Spot: <Box component="span" sx={{color:"#CF9FFF", fontSize:32}}>{spotName}</Box></Typography>
                 </Box>
             )}
             {!thumbnailData.length && (
-                <Typography>No Posts Available</Typography>
+                <Typography sx={{color:"white", fontSize:24}}>No Posts Available</Typography>
             )}
             <ImageList sx={{width:"100%", height:"auto", minHeight:400}} cols={3} rowHeight="auto">
             {thumbnailData.map((item) => (

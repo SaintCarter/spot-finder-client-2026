@@ -12,6 +12,8 @@ export default function Map({ setLongitude, setLatitude }) {
   const markerRef = useRef(null); // store marker
 
   const [searchValue, setSearchValue]= useState("");
+  const [loading, setLoading] = useState(true);
+
 
   const INITIAL_CENTER = [-123.107135390715, 49.283815957855];
   const INITIAL_ZOOM = 10;
@@ -35,6 +37,8 @@ export default function Map({ setLongitude, setLatitude }) {
         
       } catch (error) {
         console.error('Map error:', error);
+      } finally {
+        setLoading(false);
       }
       
       const geojson = locationData.geo;
@@ -52,7 +56,7 @@ export default function Map({ setLongitude, setLatitude }) {
         source: "locations",
         paint: {
           "circle-radius": 10,
-          "circle-color": "red"
+          "circle-color": "#CF9FFF"
         }
       });
 
@@ -84,6 +88,19 @@ export default function Map({ setLongitude, setLatitude }) {
 
   return (
     <div style={{ position: "relative", width: "100%", height: "32vh" }}>
+      {loading && (
+        <div style={{
+          position: "absolute",
+          zIndex: 2,
+          inset: 0,
+          background: "rgba(0,0,0,0.7)",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center"
+        }}>
+          loading...
+        </div>
+      )}
       <div style={{ position: "absolute", top: 10, right: 10, zIndex: 1, width: "300px" }}>
         <SearchBox
           accessToken={import.meta.env.VITE_MAP_BOX_API_KEY}

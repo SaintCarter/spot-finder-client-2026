@@ -11,10 +11,12 @@ import ImageListItem from '@mui/material/ImageListItem';
 import MediaBox from '../components/MediaBox.jsx';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import { getSpotPosts } from '../api/getSpotPosts';
+import { getUsername } from '../api/getUsername.js';
 
 
 
 export default function SpotPreview({setSpotId, setSpotName}) {
+    const [creatorName, setCreatorName] = useState('');
     const [location, setLocation] = useState(null);
     const [selectedSpotId, setSelectedSpotId] = useState('');
     const [spotData, setSpotData] = useState(null);
@@ -68,6 +70,7 @@ export default function SpotPreview({setSpotId, setSpotName}) {
         );
         setSelectedSpotData(selectedData || null);
         //console.log(selectedData); returns all of spot table row
+
         setLocation({
             lat: selectedData.latitude, 
             lng: selectedData.longitude
@@ -90,6 +93,11 @@ export default function SpotPreview({setSpotId, setSpotName}) {
         // spot_media table
         const fetchMedia = async () => {
             if (selectedData) {
+                const creatorId = selectedData.creatorid;
+                if(creatorId){
+                    const creator = await getUsername({userId: creatorId});
+                    setCreatorName(creator.username.username);
+                }
                 const selectedMedia = await getSpotMedia({ spotId: selectedSpotId });
                 setSpotMedia(selectedMedia?.spotMedia || [{ url: defaultMediaUrl, type: 'image' }]);
             } else {
@@ -109,8 +117,8 @@ export default function SpotPreview({setSpotId, setSpotName}) {
             </Box>
             {/* details right side */}
             <Box sx={{minWidth:"60%",minHeight:"100%", display:"flex", justifyContent:"center", alignItems:"center", flexDirection:"column", gap:2, "@media (max-width:600px)": {minWidth:"100%"}}}>
-                <Typography variant="h3" sx={{overflowWrap:"break-word", width:"80%"}}>{selectedSpotData?.name || 'Select a point on the map'}</Typography>
-                <Typography sx={{border:"1px solid black", width:"80%", borderRadius:1, p:1}}>{selectedSpotData?.description || 'to see that spots data'}</Typography>
+                <Typography variant="h3" sx={{overflowWrap:"break-word", width:"80%", color:"white"}}>{selectedSpotData?.name || 'Select a point on the map'}</Typography>
+                <Typography sx={{borderTop:"1px solid black", width:"80%", p:1, color:"white", overflowWrap:"break-word"}}>{selectedSpotData?.description || 'to see that spots data'}</Typography>
                 <Box sx={{display: 'flex', gap: 1, flexWrap: 'wrap', width: "80%"}}>
                     {DataTypes.map((typeName, index) => (
                         <Chip 
@@ -150,6 +158,9 @@ export default function SpotPreview({setSpotId, setSpotName}) {
                 </Box>
                 <Box sx={{display:"flex", justifyContent:"flex-start", alignItems:"center", width:"80%", gap:2}}>
                     <Button variant="contained" onClick={handleViewPosts}>View Posts</Button>
+                </Box>
+                <Box sx={{display:"flex", justifyContent:"flex-start", alignItems:"center", width:"80%", gap:2}}>
+                    {creatorName && (<Typography sx={{color:"white", fontSize:14}}>Created By <Box component="span" sx={{color:"#CF9FFF", fontSize:18, textDecoration:"underline", cursor:"pointer"}}>{creatorName}</Box></Typography>)}
                 </Box>
             </Box>
         </Box>

@@ -38,7 +38,7 @@ export default function MediaBox({spotMedia}) {
         <>
             <Box sx={{display:"flex", justifyContent:"center", alignItems:"center",}}>
                     {!isSingle && (
-                        <IconButton onClick={handleBack}>
+                        <IconButton sx={{color:"white"}} onClick={handleBack}>
                             <ArrowBackIosIcon />
                         </IconButton>
                     )}
@@ -66,7 +66,7 @@ export default function MediaBox({spotMedia}) {
                         )}
                     </Box>
                     {!isSingle && (
-                        <IconButton onClick={handleForward}>
+                        <IconButton sx={{color:"white"}} onClick={handleForward}>
                             <ArrowForwardIosIcon />
                         </IconButton>
                     )}
