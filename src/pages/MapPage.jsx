@@ -150,11 +150,12 @@ export default function MapPage() {
         alignItems: 'center', 
         bgcolor: '#3d3d3d',
         flexDirection:"column",
-        p:2
+        p:2,
+        "@media (max-width:600px)": {  }
         }}>
             
             {isAuthenticated && <Button onClick={navigateCreate} variant="contained" component="label" fullWidth sx={{ mb: 1 }}>Create</Button>}
-            {!isAuthenticated && <Typography variant="h5" sx={{overflowWrap:"break-word", width:"100%", textAlign:"center"}}><Box component={'a'} href={'/login'} sx={{color:"white"}} >Create A Free Account</Box> To Access All The Features!</Typography>}
+            {!isAuthenticated && <Typography variant="h5" sx={{overflowWrap:"break-word", width:"100%", textAlign:"center", color:"white", mb:4}}><Box component={'a'} href={'/login'} sx={{color:"white"}} >Create A Free Account</Box> To Access All The Features!</Typography>}
             {successMessage && <Alert severity="success">{successMessage}</Alert>}
             <Box sx={{display:'flex', justifyContent:'center', alignItems:'center'}} >
                 <Typography>({ratingCount})</Typography>

@@ -98,7 +98,7 @@ export default function CreatePostPage() {
         p:2,
         
         }}>
-            <Paper elevation={6} sx={{ p: 4, borderRadius: 3, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent:"center", width:"100%" }}>
+            <Paper elevation={6} sx={{ p: 4, borderRadius: 3, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent:"center", width:"100%",  }}>
                 {error && <Alert severity="error" sx={{ width: '100%', mb: 2 }}>{error}</Alert>}
                 <Box component="form" onSubmit={handleSubmit} noValidate sx={{ width: '100%'  }}>
                     <Button variant="outlined" component="label" fullWidth sx={{ mb: 1 }}>

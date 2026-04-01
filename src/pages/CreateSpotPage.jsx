@@ -143,7 +143,7 @@ export default function CreateSpotPage() {
 
     return (
         <Box sx={{width:"100%", height:"auto", display:"flex", justifyContent:"center", alignItems:"center", flexDirection:"column", color:"#ffffff", }}>
-            <Paper elevation={6} sx={{ p: 4, borderRadius: 3, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <Paper elevation={6} sx={{ p: 4, borderRadius: 3, display: 'flex', flexDirection: 'column', alignItems: 'center', "@media (max-width:600px)": {p:1} }}>
                 {error && <Alert severity="error" sx={{ width: '100%', mb: 2 }}>{error}</Alert>}                
                 <Box component="form" onSubmit={handleSubmit} noValidate sx={{ width: '100%'  }}>
                     <Button onClick={() => navigate('/dashboard/map')} variant="contained" component="label" fullWidth sx={{ mb: 1 }}>Go To Spot Map</Button>

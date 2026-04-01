@@ -39,23 +39,23 @@ const apiUrl = import.meta.env.VITE_API_URL;
           <Typography sx={{ fontWeight: 'bold' }}>Spin the Wheel</Typography>
           <Box component={'img'} src={data.image} alt={'skateboard'} sx={{width:"auto", height:60, objectFit:"contain"}}></Box>
         </Box>*/}
-        <Box sx={{ width:"100%",display:"flex", justifyContent:"space-around", alignItems:"center", mt:2, bgcolor:"#3d3d3d", p:1, borderRadius:1, gap:1}}>
-          <Box onClick={() => navigate('/dashboard/reels')} sx={{"&:hover": { filter: "brightness(1.2)", transform: "scale(1.02)"}, cursor:"pointer", color:"white",filter: "brightness(0.8)", minHeight:"80vh", width:"33%", justifyContent:"center", alignItems:"center", display:"flex", backgroundImage:"url('/images/reels.webp')", backgroundRepeat:"none", backgroundSize:"cover", backgroundPosition:"center", }}>
+        <Box sx={{ width:"100%",display:"flex",  justifyContent:"space-around", alignItems:"center", mt:2, bgcolor:"#3d3d3d", p:1, borderRadius:1, gap:1, "@media (max-width:600px)": {flexDirection:"column-reverse",}}}>
+          <Box onClick={() => navigate('/dashboard/reels')} sx={{ "&:hover": { filter: "brightness(1.2)", transform: "scale(1.02)"}, cursor:"pointer", color:"white",filter: "brightness(0.8)", minHeight:"80vh", width:"33%", justifyContent:"center", alignItems:"center", display:"flex", backgroundImage:"url('/images/reels.webp')", backgroundRepeat:"none", backgroundSize:"cover", backgroundPosition:"center", "@media (max-width:600px)": {width:"100%" } }}>
             <Typography sx={{width:"100%", textAlign:"center", fontWeight: 'bold', fontSize:28}}>REELS</Typography>
           </Box>
-          <Box sx={{width:"33%", display:"flex", flexDirection:"column", gap:1}}>
-            <Box onClick={() => navigate('/dashboard/map')} sx={{"&:hover": { filter: "brightness(1.2)", transform: "scale(1.02)"}, cursor:"pointer", color:"white",filter: "brightness(0.8)", minHeight:"40vh", justifyContent:"center", alignItems:"center", display:"flex", backgroundImage:"url('/images/map.webp')", backgroundRepeat:"none", backgroundSize:"cover", backgroundPosition:"center", }}>
+          <Box sx={{width:"33%", display:"flex", flexDirection:"column", gap:1, "@media (max-width:600px)": {flexDirection:"row", width:"100%"}}}>
+            <Box onClick={() => navigate('/dashboard/map')} sx={{ "&:hover": { filter: "brightness(1.2)", transform: "scale(1.02)"}, cursor:"pointer", color:"white",filter: "brightness(0.8)", minHeight:"40vh", justifyContent:"center", alignItems:"center", display:"flex", backgroundImage:"url('/images/map.webp')", backgroundRepeat:"none", backgroundSize:"cover", backgroundPosition:"center", "@media (max-width:600px)": {width:"50%" } }}>
               <Typography sx={{width:"100%", textAlign:"center", fontWeight: 'bold', fontSize:28}}>MAP</Typography>
             </Box>
-            <Box onClick={() => navigate('/dashboard/create/spot')} sx={{"&:hover": { filter: "brightness(1.2)", transform: "scale(1.02)"}, cursor:"pointer",filter: "brightness(0.8)", color:"white", minHeight:"40vh",  justifyContent:"center", alignItems:"center", display:"flex", backgroundImage:"url('/images/create.webp')", backgroundRepeat:"none", backgroundSize:"cover", backgroundPosition:"center", }}>
+            <Box onClick={() => navigate('/dashboard/create/spot')} sx={{"&:hover": { filter: "brightness(1.2)", transform: "scale(1.02)"}, cursor:"pointer",filter: "brightness(0.8)", color:"white", minHeight:"40vh",  justifyContent:"center", alignItems:"center", display:"flex", backgroundImage:"url('/images/create.webp')", backgroundRepeat:"none", backgroundSize:"cover", backgroundPosition:"center", "@media (max-width:600px)": {width:"50%" }  }}>
               <Typography sx={{width:"100%", textAlign:"center", fontWeight: 'bold', fontSize:28}}>CREATE SPOT</Typography>
             </Box>
           </Box>
-          <Box sx={{width:"33%", display:"flex", flexDirection:"column", gap:1}}>
-            <Box onClick={() => navigate('/dashboard/create/post')} sx={{"&:hover": { filter: "brightness(1.2)", transform: "scale(1.02)"}, cursor:"pointer",filter: "brightness(0.8)", color:"white", minHeight:"40vh",  justifyContent:"center", alignItems:"center", display:"flex", backgroundImage:"url('/images/post.jpg')", backgroundRepeat:"none", backgroundSize:"cover", backgroundPosition:"center", }}>
+          <Box sx={{width:"33%", display:"flex", flexDirection:"column", gap:1, "@media (max-width:600px)": {flexDirection:"row", width:"100%"}}}>
+            <Box onClick={() => navigate('/dashboard/create/post')} sx={{"&:hover": { filter: "brightness(1.2)", transform: "scale(1.02)"}, cursor:"pointer",filter: "brightness(0.8)", color:"white", minHeight:"40vh",  justifyContent:"center", alignItems:"center", display:"flex", backgroundImage:"url('/images/post.jpg')", backgroundRepeat:"none", backgroundSize:"cover", backgroundPosition:"center", "@media (max-width:600px)": {width:"50%" }}}>
               <Typography sx={{width:"100%", textAlign:"center", fontWeight: 'bold', fontSize:28}}>CREATE POST</Typography>
             </Box>
-            <Box onClick={() => navigate('/settings')} sx={{"&:hover": { filter: "brightness(1.2)", transform: "scale(1.02)"},filter: "brightness(0.8)", cursor:"pointer", color:"white", minHeight:"40vh", justifyContent:"center", alignItems:"center", display:"flex", backgroundImage:"url('/images/skate.jpg')", backgroundRepeat:"none", backgroundSize:"cover", backgroundPosition:"center", }}>
+            <Box onClick={() => navigate('/settings')} sx={{"&:hover": { filter: "brightness(1.2)", transform: "scale(1.02)"},filter: "brightness(0.8)", cursor:"pointer", color:"white", minHeight:"40vh", justifyContent:"center", alignItems:"center", display:"flex", backgroundImage:"url('/images/skate.jpg')", backgroundRepeat:"none", backgroundSize:"cover", backgroundPosition:"center", "@media (max-width:600px)": {width:"50%" } }}>
               <Typography sx={{width:"100%", textAlign:"center", fontWeight: 'bold', fontSize:28}}>MY ACCOUNT</Typography>
             </Box>
           </Box>

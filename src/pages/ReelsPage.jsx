@@ -112,7 +112,8 @@ export default function ReelsPage() {
         justifyContent:'center',
         bgcolor: '#3d3d3d',
         flexDirection:"column",
-        p:2
+        p:2,
+        "@media (max-width:600px)": {width:"100%", p:0 }
         }}>
         {selectedPostId && (
             <Box
@@ -152,11 +153,12 @@ export default function ReelsPage() {
                 alignItems: 'center', 
                 justifyContent:"center",
                 flexDirection:"column",
-                width:"100%"
+                width:"100%",
+                "@media (max-width:600px)": { p:2 }
             }}>
                 {!mapOpen && (
-                    <Box sx={{gap:2, mb:2, width:"100%", display:'flex', justifyContent:"flex-start", alignItems:"center"}}>
-                        <Typography sx={{color:"white", fontSize:20}}>Filter By Spot:</Typography>
+                    <Box sx={{gap:2, mb:2, width:"100%", display:'flex', justifyContent:"flex-start", alignItems:"center", }}>
+                        <Typography sx={{color:"white", fontSize:20, "@media (max-width:600px)": { px:2 }}}>Filter By Spot:</Typography>
                         <Button variant="contained" onClick={() => setMapOpen(true)}>Open Map</Button>
                         {(spotId || initialSpotId) && <Button onClick={clearFilters}>Clear Filters</Button>}
                     </Box>
@@ -182,13 +184,13 @@ export default function ReelsPage() {
             </Box>
             {(spotId || initialSpotId) && (
                 <Box sx={{width:"100%", display:'flex', justifyContent:"flex-start", alignItems:"center"}}>
-                    <Typography sx={{color:"white", fontSize:20}}>Selected Spot: <Box component="span" sx={{color:"#CF9FFF", fontSize:32}}>{spotName}</Box></Typography>
+                    <Typography sx={{color:"white", fontSize:20, "@media (max-width:600px)": { p:2 }}}>Selected Spot: <Box component="span" sx={{color:"#CF9FFF", fontSize:32}}>{spotName}</Box></Typography>
                 </Box>
             )}
             {!thumbnailData.length && (
                 <Typography sx={{color:"white", fontSize:24}}>No Posts Available</Typography>
             )}
-            <ImageList sx={{width:"100%", height:"auto", minHeight:400}} cols={3} rowHeight="auto">
+            <ImageList sx={{width:"100%", height:"auto", minHeight:400, "@media (max-width:600px)": { minHeight:160}}} cols={3} rowHeight="auto">
             {thumbnailData.map((item) => (
                 <ImageListItem key={item.id}>
                     {item.type === 'video' ? (

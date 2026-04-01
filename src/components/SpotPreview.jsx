@@ -62,7 +62,7 @@ export default function SpotPreview({setSpotId, setSpotName}) {
 
     useEffect(() => {
         if (!spotData || !selectedSpotId) return;
-
+        setError('');
         //spots table
         setSpotId(selectedSpotId);
         const selectedData = spotData.spots.find(
@@ -109,7 +109,7 @@ export default function SpotPreview({setSpotId, setSpotName}) {
     }, [selectedSpotId, spotData]);
 
     return (
-    <Box sx={{width:"100%", height:"auto", display:"flex", justifyContent:"center", alignItems:"center", flexDirection:"column", p:2 }}>
+    <Box sx={{width:"100%", height:"auto", display:"flex", justifyContent:"center", alignItems:"center", flexDirection:"column", p:2, "@media (max-width:600px)": { p:0, py:2 } }}>
         <Box sx={{mb:2, minWidth:"100%", minHeight:"40vh", display:"flex", justifyContent:"center", alignItems:"center", gap:2, "@media (max-width:600px)": {flexDirection:"column-reverse"} }}>
             {/* media left side */}
             <Box sx={{minWidth:"40%", minHeight:"100%", display:"flex", justifyContent:"center", alignItems:"center", flexDirection:"column", "@media (max-width:600px)": {minWidth:"100%"}}}>
@@ -117,8 +117,8 @@ export default function SpotPreview({setSpotId, setSpotName}) {
             </Box>
             {/* details right side */}
             <Box sx={{minWidth:"60%",minHeight:"100%", display:"flex", justifyContent:"center", alignItems:"center", flexDirection:"column", gap:2, "@media (max-width:600px)": {minWidth:"100%"}}}>
-                <Typography variant="h3" sx={{overflowWrap:"break-word", width:"80%", color:"white"}}>{selectedSpotData?.name || 'Select a point on the map'}</Typography>
-                <Typography sx={{borderTop:"1px solid black", width:"80%", p:1, color:"white", overflowWrap:"break-word"}}>{selectedSpotData?.description || 'to see that spots data'}</Typography>
+                <Typography variant="h3" sx={{overflowWrap:"break-word", width:"80%", color:"white", "@media (max-width:600px)": {width:"95%"}}}>{selectedSpotData?.name || 'Select a point on the map'}</Typography>
+                <Typography sx={{borderTop:"1px solid black", width:"80%", p:1, color:"white", overflowWrap:"break-word", "@media (max-width:600px)": {width:"95%"}}}>{selectedSpotData?.description || 'to see that spots data'}</Typography>
                 <Box sx={{display: 'flex', gap: 1, flexWrap: 'wrap', width: "80%"}}>
                     {DataTypes.map((typeName, index) => (
                         <Chip 
@@ -129,7 +129,7 @@ export default function SpotPreview({setSpotId, setSpotName}) {
                         />
                     ))}
                 </Box>
-                <Box sx={{display:"flex", justifyContent:"flex-start", alignItems:"center", width:"80%", gap:2}}>
+                <Box sx={{display:"flex", justifyContent:"flex-start", alignItems:"center", width:"80%", gap:2, "@media (max-width:600px)": {width:"100%"}}}>
                     <IconButton onClick={handleCopyLocation}>
                         <ContentCopyIcon />
                     </IconButton>
@@ -156,16 +156,18 @@ export default function SpotPreview({setSpotId, setSpotName}) {
                         Open in Apple Maps
                     </Link>
                 </Box>
-                <Box sx={{display:"flex", justifyContent:"flex-start", alignItems:"center", width:"80%", gap:2}}>
+                <Box sx={{display:"flex", justifyContent:"flex-start", alignItems:"center", width:"80%", gap:2, "@media (max-width:600px)": {width:"95%"}}}>
                     <Button variant="contained" onClick={handleViewPosts}>View Posts</Button>
                 </Box>
-                <Box sx={{display:"flex", justifyContent:"flex-start", alignItems:"center", width:"80%", gap:2}}>
-                    {creatorName && (<Typography sx={{color:"white", fontSize:14}}>Created By <Box component="span" sx={{color:"#CF9FFF", fontSize:18, textDecoration:"underline", cursor:"pointer"}}>{creatorName}</Box></Typography>)}
+                <Box sx={{display:"flex", justifyContent:"flex-start", alignItems:"center", width:"80%", gap:2, "@media (max-width:600px)": {width:"100%"}}}>
+                    {creatorName && (<Typography sx={{color:"white", fontSize:14, "@media (max-width:600px)": {textAlign:"center", width:"100%"}}}>Created By <Box component="span" sx={{color:"#CF9FFF", fontSize:18, textDecoration:"underline", cursor:"pointer"}}>{creatorName}</Box></Typography>)}
                 </Box>
             </Box>
         </Box>
         {error && <Alert severity="error" sx={{ width: '97%', mb: 2 }}>{error}</Alert>}
-        <BigMap setSpotData={setSpotData} setSelectedSpotId={setSelectedSpotId}/>
+        <Box sx={{display:"flex", justifyContent:"center", alignItems:"center", width:"100%",}}>
+            <BigMap setSpotData={setSpotData} setSelectedSpotId={setSelectedSpotId}/>
+        </Box>
     </Box>
 
     );
